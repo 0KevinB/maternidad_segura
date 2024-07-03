@@ -1,0 +1,102 @@
+.cta {
+    background-image: url('../../../assets/images/img-inicio.png');
+    height: 415px;
+    display: flex;
+    align-items: center;
+}
+
+.info {
+    margin: 0px 0px 0px 104px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.info h3 {
+    color: #3B3B3B;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Poppins;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.info p {
+    color: #2B2B2B;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Poppins;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.info button {
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border-radius: 15px;
+    background: #121481;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+    border: none;
+}
+
+.titulo-beneficios {
+    text-align: center;
+    color: #121481;
+    font-family: Poppins;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.beneficios {
+    margin: 0px 104px 0px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.beneficio h2 {
+    color: #0F172A;
+    font-family: Poppins;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 110%;
+}
+
+.beneficio p {
+    color: #0F172A;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 160%;
+    /* 28.8px */
+}
+
+.art-educativos {
+    background: #F2F4F8;
+    width: 100%;
+    height: 685px;
+    padding: auto;
+}
+
+.descripcion-arts, h3{
+    margin: 50px 104px 0px;
+}
+
+.cards{
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 104px 0px;
+}
