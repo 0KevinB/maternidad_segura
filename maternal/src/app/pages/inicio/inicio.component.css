@@ -12,14 +12,17 @@
     font-style: normal;
 }
 
-.info h3 {
-    color: #3B3B3B;
+h3 {
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Poppins;
     font-size: 28px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+}
+
+.info h3 {
+    color: #3B3B3B;
 }
 
 .info p {
@@ -87,16 +90,68 @@
 .art-educativos {
     background: #F2F4F8;
     width: 100%;
-    height: 685px;
+    height: 700px;
     padding: auto;
 }
 
-.descripcion-arts, h3{
-    margin: 50px 104px 0px;
+.descripcion-arts {
+    margin: 5px 104px 30px;
+    color: #000;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Poppins;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
 
-.cards{
+.info-art h3 {
+    color: #121481;
+    margin: 30px 104px 0px;
+    padding-top: 10px;
+}
+
+
+.cards {
     display: flex;
     justify-content: space-between;
     margin: 0px 104px 0px;
+}
+
+.card1,
+.card2,
+.card3 {
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 0px 34px 33px -23px rgba(22, 28, 45, 0.13);
+}
+
+.cards img {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.cards p {
+    padding: 0px 20px 0px;
+    color: #a4a4a4;
+    font-family: Poppins;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 26px;
+    /* 173.333% */
+    letter-spacing: -0.1px;
+}
+
+.cards h4 {
+    padding: 0px 20px 0px;
+    color: #161C2D;
+    font-family: Poppins;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 32px;
+    /* 152.381% */
+    letter-spacing: -0.5px;
+    margin-top: -10px;
 }
