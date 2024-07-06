@@ -370,7 +370,8 @@ export const CrearNutricion = async (req: Request, res: Response) => {
     comida_rapida,
     legumbres,
     mariscos,
-    lacteos
+    lacteos,
+    numero_comidas
   } = req.body;
 
   // Validación de entrada
@@ -391,8 +392,9 @@ export const CrearNutricion = async (req: Request, res: Response) => {
           comida_rapida,
           legumbres,
           mariscos,
-          lacteos
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+          lacteos,
+          numero_comidas
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `;
       connection.query(
         sql,
@@ -405,7 +407,8 @@ export const CrearNutricion = async (req: Request, res: Response) => {
           comida_rapida,
           legumbres,
           mariscos,
-          lacteos
+          lacteos,
+          numero_comidas
         ],
         (error: any, results: any) => {
           if (error) return reject(error);
