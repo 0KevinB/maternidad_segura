@@ -1,1 +1,166 @@
-<p>formulario-datos works!</p>
+<div class>
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+
+                <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
+                    <h1 class="h1 fw-bold mb-0 text-center py-2">Registro de Usuario</h1>
+
+                    <!-- Nombres y Apellidos -->
+                    <div class="row form-row">
+                        <div class="form-group col-md-6 py-1">
+                            <label class="form-label" for="inputNombres">Nombres</label>
+                            <input type="text" class="form-control" formControlName="nombre"
+                                placeholder="Ingrese su nombre">
+                            <!-- Alerta Nombres -->
+                            <div class="col-md-12 py-1.5">
+                                <div *ngIf="
+                  myForm.get('nombre')?.invalid && myForm.get('nombre')?.touched
+                " class="alert alert-danger">
+                                    <div *ngIf="myForm.get('nombre')?.errors?.['required']">
+                                        El nombre es obligatorio
+                                    </div>
+                                    <div *ngIf="myForm.get('nombre')?.errors?.['pattern']">
+                                        El nombre debe contener solo letras
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 py-1">
+                            <label class="form-label" for="inputApellidos">Apellidos</label>
+                            <input type="text" class="form-control" formControlName="apellidos"
+                                placeholder="Ingrese sus apellidos">
+                            <!-- Agrega la validación de apellidos según tus requisitos -->
+                            <!-- Alerta Apellido -->
+                            <div class="col-md-12  py-1.5">
+                                <div *ngIf="
+                myForm.get('apellidos')?.invalid &&
+                myForm.get('apellidos')?.touched
+              " class="alert alert-danger">
+                                    <div *ngIf="myForm.get('apellidos')?.errors?.['required']">
+                                        El apellido es obligatorio
+                                    </div>
+                                    <div *ngIf="myForm.get('apellidos')?.errors?.['pattern']">
+                                        El apellido debe contener solo letras
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row form-row">
+                        <div class="form-group col-md-6 py-1">
+                            <label class="form-label" for="inputTelefono">Teléfono</label>
+                            <input type="text" class="form-control" formControlName="telefono"
+                                placeholder="Ingrese su teléfono">
+                            <!-- Agrega la validación de teléfono según tus requisitos -->
+                            <!-- Alerta Teléfono -->
+                            <div class="col-md-12  py-1.5">
+                                <div *ngIf="
+                  myForm.get('telefono')?.invalid &&
+                  myForm.get('telefono')?.touched
+                " class="alert alert-danger">
+                                    <div *ngIf="myForm.get('telefono')?.errors?.['required']">
+                                        El teléfono es obligatorio
+                                    </div>
+                                    <div *ngIf="myForm.get('telefono')?.errors?.['pattern']">
+                                        El teléfono debe contener solo números
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="row form-row">
+                        <div class="form-group col-md-6 py-1">
+                            <label class="form-label" for="inputEmail">Correo Electrónico</label>
+                            <input type="email" class="form-control" formControlName="correo"
+                                placeholder="Ingrese su correo electrónico">
+                            <!-- Alerta Email -->
+                            <div class="col-md-12 py-1.5">
+                                <div *ngIf="
+                  myForm.get('correo')?.invalid &&
+                  myForm.get('correo')?.touched
+                " class="alert alert-danger">
+                                    <div *ngIf="myForm.get('correo')?.errors?.['required']">
+                                        El correo electrónico es obligatorio
+                                    </div>
+                                    <div *ngIf="myForm.get('correo')?.errors?.['pattern']">
+                                        El correo electrónico debe contener un formato válido
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 py-1">
+                            <label class="form-label" for="inputFecha">Fecha de nacimiento</label>
+                            <input type="text" class="form-control" formControlName="fecha_nacimiento"
+                                placeholder="Ingrese su contraseña">
+                            <label class="form-label" for="inputPassword">contraseña</label>
+                            <input type="password" class="form-control" formControlName=contraseña
+                                placeholder="Ingrese su contraseña">
+                            <!--Alerta contraseña -->
+                            <div class="col-md-12 py-1.5">
+                                <div *ngIf="
+                                myForm.get('contraseña')?.invalid &&
+                                myForm.get('contraseña')?.touched
+                              " class="alert alert-danger">
+                                    <div *ngIf="myForm.get('contraseña')?.errors?.['required']">
+                                        La contraseña es obligatoria
+                                    </div>
+                                    <div *ngIf="myForm.get('contraseña')?.errors?.['pattern']">
+                                        La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una
+                                        letra minúscula y un
+                                        número
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6 py-1">
+                        <label class="form-label" for="inputPasswordConfirm">Confirmar contraseña</label>
+                        <input type="password" class="form-control" formControlName="passwordConfirm"
+                            placeholder="Confirme su contraseña">
+                        <!-- Alerta Confirmación de contraseña -->
+                        <div class="col-md-12 py-1.5 ">
+                            <div *ngIf="
+                  myForm.get('passwordConfirm')?.invalid &&
+                  myForm.get('passwordConfirm')?.touched
+                " class="alert alert-danger">
+                                <div *ngIf="myForm.get('passwordConfirm')?.errors?.['required']">
+                                    La confirmación de la contraseña es obligatoria
+                                </div>
+                                <div *ngIf="myForm.get('passwordConfirm')?.errors?.['pattern']">
+                                    La confirmación de la contraseña debe contener al menos 8 caracteres, una letra
+                                    mayúscula, una letra
+                                    minúscula y un número
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Términos y Condiciones -->
+                    <div class="form-group my-3 ms-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" formControlName="terminos" id="gridCheck">
+                            <label class="form-check-label" for="gridCheck">
+                                He leído y acepto los <a href="#">términos y condiciones de uso</a>
+                            </label>
+
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button class="btn btn-primary btn-dark" [disabled]="myForm.invalid" type="submit">
+                            Crear
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <app-footer>
+    </app-footer>
+</div>

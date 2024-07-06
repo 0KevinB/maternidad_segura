@@ -8,7 +8,7 @@ import { NotificationService } from './notification.service';
   providedIn: 'root'
 })
 
-export class UserService {
+export class UsuarioService {
 
   private myAppUrl: string
   private myApiUrl: string

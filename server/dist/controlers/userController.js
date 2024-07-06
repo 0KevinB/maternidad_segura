@@ -17,7 +17,7 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const db_1 = __importDefault(require("../models/db"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const CrearUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { nombre, correo, contraseña, fecha_nacimiento } = req.body;
+    const { nombre, apellido, correo, contraseña, fecha_nacimiento, telefono } = req.body;
     // Validación de entrada
     if (!nombre || !correo || !contraseña || !fecha_nacimiento) {
         return res.status(400).json({ message: 'Todos los campos son obligatorios' });
@@ -40,10 +40,10 @@ const CrearUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         // Insertar el usuario en la base de datos
         yield new Promise((resolve, reject) => {
             const sql = `
-        INSERT INTO usuario (nombre, correo, contraseña, fecha_nacimiento)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO usuario (nombre, apellido, correo, contraseña, fecha_nacimiento, telefono)
+        VALUES (?, ?, ?, ?, ?, ?)
       `;
-            db_1.default.query(sql, [nombre, correo, hashedPassword, fecha_nacimiento], (error, results) => {
+            db_1.default.query(sql, [nombre, apellido, correo, hashedPassword, fecha_nacimiento, telefono], (error, results) => {
                 if (error)
                     return reject(error);
                 resolve(results);

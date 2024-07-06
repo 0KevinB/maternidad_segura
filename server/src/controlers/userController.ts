@@ -4,7 +4,7 @@ import connection from '../models/db';
 import jwt from 'jsonwebtoken';
 
 export const CrearUsuario = async (req: Request, res: Response) => {
-  const { nombre, correo, contraseña, fecha_nacimiento } = req.body;
+  const { nombre, apellido, correo, contraseña, fecha_nacimiento, telefono } = req.body;
 
   // Validación de entrada
   if (!nombre || !correo || !contraseña || !fecha_nacimiento) {
@@ -35,12 +35,12 @@ export const CrearUsuario = async (req: Request, res: Response) => {
     // Insertar el usuario en la base de datos
     await new Promise((resolve, reject) => {
       const sql = `
-        INSERT INTO usuario (nombre, correo, contraseña, fecha_nacimiento)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO usuario (nombre, apellido, correo, contraseña, fecha_nacimiento, telefono)
+        VALUES (?, ?, ?, ?, ?, ?)
       `;
       connection.query(
         sql,
-        [nombre, correo, hashedPassword, fecha_nacimiento],
+        [nombre, apellido, correo, hashedPassword, fecha_nacimiento, telefono],
         (error: any, results: any) => {
           if (error) return reject(error);
           resolve(results);

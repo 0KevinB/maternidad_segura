@@ -10,7 +10,7 @@ export const routes: Routes = [
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
   { path: 'inicio', component: InicioComponent },
   { path: 'contacto-profesional', component: ContactoProfesionalComponent },
-  { path: 'calculadora/1', component: FormularioDatosComponent },
+  { path: 'registro', component: FormularioDatosComponent },
   { path: 'calculadora/2', component: FormularioHabitosComponent },
   { path: 'resultados', component: ResultadosComponent },
 ];
