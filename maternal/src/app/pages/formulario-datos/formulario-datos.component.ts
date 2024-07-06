@@ -50,12 +50,9 @@ export class FormularioDatosComponent {
       fecha_nacimiento: this.myForm.value.fecha_nacimiento
     }
     console.log(user);
-    if (this.myForm.value.Contraseña != this.myForm.value.passwordConfirm ||
-      this.myForm.value.CorreoElectronico != this.myForm.value.emailConfirm
-    ) {
-      return
-    }
+
     this._userService.singup(user).subscribe(data => {
+      console.log(data);
       this.notificationService.notify('Registrado correctamente.', 2000);
       this.router.navigate(['/login'])
     })

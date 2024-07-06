@@ -18,6 +18,7 @@ const db_1 = __importDefault(require("../models/db"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const CrearUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { nombre, apellido, correo, contraseña, fecha_nacimiento, telefono } = req.body;
+    console.log(nombre);
     // Validación de entrada
     if (!nombre || !correo || !contraseña || !fecha_nacimiento) {
         return res.status(400).json({ message: 'Todos los campos son obligatorios' });
