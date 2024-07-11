@@ -33,6 +33,9 @@ h3 {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    width: 503px;
+    height: 80px;
+    flex-shrink: 0;
 }
 
 .info button {
@@ -60,12 +63,18 @@ h3 {
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    margin-top: 50px;
 }
 
 .beneficios {
-    margin: 0px 104px 0px;
+    margin: 50px 104px 0px;
     display: flex;
     justify-content: space-between;
+}
+
+.beneficio {
+    width: 550px;
+    margin-bottom: 90px;
 }
 
 .beneficio h2 {
@@ -87,71 +96,140 @@ h3 {
     /* 28.8px */
 }
 
-.art-educativos {
-    background: #F2F4F8;
-    width: 100%;
-    height: 700px;
-    padding: auto;
+.articles {
+    background-color: #F2F4F8; /* Ajusta el color de fondo según sea necesario */
 }
 
-.descripcion-arts {
-    margin: 5px 104px 30px;
-    color: #000;
-    font-feature-settings: 'clig' off, 'liga' off;
-    font-family: Poppins;
-    font-size: 22px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
-
-.info-art h3 {
+.articles h2 {
     color: #121481;
-    margin: 30px 104px 0px;
-    padding-top: 10px;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
+.articles p {
+    color: #6c757d;
+    font-size: 1rem;
+}
 
-.cards {
+.card {
+    border: none; /* Quita el borde por defecto de las tarjetas */
+    border-radius: 10px; /* Ajusta el radio del borde según sea necesario */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Añade una sombra suave a las tarjetas */
+}
+
+.card-body {
+    background-color: #ffffff; /* Fondo blanco para el cuerpo de las tarjetas */
+    border-bottom-left-radius: 10px; /* Ajusta el radio del borde según sea necesario */
+    border-bottom-right-radius: 10px; /* Ajusta el radio del borde según sea necesario */
+    padding: 20px;
+}
+
+.card-subtitle {
+    font-size: 0.9rem;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #121481;
+}
+
+/* About */
+.about {
+    background-color: #F2F4F8; /* Ajusta el color de fondo según sea necesario */
     display: flex;
     justify-content: space-between;
-    margin: 0px 104px 0px;
+    align-items: center;
+    flex-direction: row;
+    padding: 0px 104px 20px;
 }
 
-.card1,
-.card2,
-.card3 {
-    background-color: #FFF;
-    border-radius: 10px;
-    box-shadow: 0px 34px 33px -23px rgba(22, 28, 45, 0.13);
+.about h2 span{
+    color: #121481;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
-.cards img {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+.about p {
+    color: #000000;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
 }
 
-.cards p {
-    padding: 0px 20px 0px;
-    color: #a4a4a4;
+.about .btn-primary {
+    background-color: #121481;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+}
+
+/* Contact */
+.contact {
+    background-color: #ffffff; /* Ajusta el color de fondo según sea necesario */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contact h2 span {
+    color: #121481; /* Ajusta el color del encabezado */
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.contact p {
+    color: #000000;
+    font-size: 1rem;
+}
+
+.contact .btn-primary {
+    background-color: #121481;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+}
+
+.contact .card {
+    background-color: #ffe4e1; /* Ajusta el color de fondo de la tarjeta */
+    border: none; /* Quita el borde por defecto de la tarjeta */
+    border-radius: 10px; /* Ajusta el radio del borde según sea necesario */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Añade una sombra suave a la tarjeta */
+}
+
+.contact .card form {
+    flex: 1; /* Asegura que el formulario ocupe el espacio disponible */
+}
+
+.form-group{
+    margin-bottom: 20px;
+    width: 90%;
+}
+
+.about button {
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border-radius: 15px;
+    background: #121481;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+    border: none;
+}
+
+.contact a{
+    border-radius: 15px;
+}
+
+label, input{
     font-family: Poppins;
     font-size: 15px;
     font-style: normal;
     font-weight: 400;
-    line-height: 26px;
-    /* 173.333% */
-    letter-spacing: -0.1px;
-}
-
-.cards h4 {
-    padding: 0px 20px 0px;
-    color: #161C2D;
-    font-family: Poppins;
-    font-size: 21px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 32px;
-    /* 152.381% */
-    letter-spacing: -0.5px;
-    margin-top: -10px;
+    line-height: normal;
 }

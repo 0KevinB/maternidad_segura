@@ -293,7 +293,7 @@ const CrearHabitos = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.CrearHabitos = CrearHabitos;
 const CrearNutricion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { usuario_id, dieta, frutas, verduras, carnes, comida_rapida, legumbres, mariscos, lacteos, numero_comidas } = req.body;
+    const { usuario_id, dieta, frutas, verduras, carnes, comida_rapida, legumbres, mariscos, lacteos, numero_comidas, numero_vasos, comidas_fuera_casa } = req.body;
     // Validación de entrada
     if (!usuario_id) {
         return res.status(400).json({ message: 'Usuario ID es un campo obligatorio' });
@@ -312,7 +312,9 @@ const CrearNutricion = (req, res) => __awaiter(void 0, void 0, void 0, function*
           legumbres,
           mariscos,
           lacteos,
-          numero_comidas
+          numero_comidas,
+          numero_vasos,
+          comidas_fuera_casa
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `;
             db_1.default.query(sql, [
@@ -325,7 +327,9 @@ const CrearNutricion = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 legumbres,
                 mariscos,
                 lacteos,
-                numero_comidas
+                numero_comidas,
+                numero_vasos,
+                comidas_fuera_casa
             ], (error, results) => {
                 if (error)
                     return reject(error);

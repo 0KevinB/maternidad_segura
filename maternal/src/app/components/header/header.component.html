@@ -1,9 +1,55 @@
-<nav class="navbar">
-    <img src="./../../../assets/images/logo.png" alt="logo">
-    <div class="options">
+<nav class="navbar navbar-expand-md">
+  <div class="container-fluid">
+    <a class="navbar-brand col-4" href="/">
+      <img src="./../../../assets/images/logo.png" alt="logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+      <ul class="navbar-nav te options">
         <a class="bttn-nav" routerLink="/inicio">Inicio</a>
-        <a class="bttn-nav" >Sobre nosotros</a>
-        <a class="bttn-nav" routerLink="/contacto-profesional">Contacto  profesional</a>
+        <a class="bttn-nav">Sobre nosotros</a>
+        <a class="bttn-nav" routerLink="/contacto-profesional">Contacto profesional</a>
         <a class="bttn-nav" routerLink="/calculadora/1">Calculadora de riesgo</a>
-    </div>
+
+        <div class="collapse navbar-collapse justify-content-end col-4" id="navbarNav">
+          <ng-container *ngIf="userLoginOn; else showLoginButtons">
+            <div class="nav-item me-4">
+              <button
+                class="btn me-2 text-white border bttn-cuenta"
+                type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Cuenta
+              </button>
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"
+                style="width: 200px; margin-right: 10px;">
+                <a class="dropdown-item text-dark border border-light" [routerLink]="['/perfil']">Perfil</a>
+                <button class="dropdown-item text-dark border-light border-dark" (click)="logout()">Cerrar
+                  Sesión</button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ng-template #showLoginButtons>
+            <ul class="navbar-nav">
+              <li class="navbar-nav">
+                <button type="button"
+                  class="btn me-2 text-white border bttn-cuenta"
+                  [routerLink]="['/login']">Iniciar Sesión</button>
+              </li>
+              <br>
+              <li class="navbar-nav">
+                <button type="button"
+                  class="btn me-2 text-white border bttn-cuenta"
+                  [routerLink]="['/registro']">Registrarse</button> 
+              </li>
+            </ul>
+          </ng-template>
+        </div>
+      </ul>
+
+  </div>
 </nav>
+
+

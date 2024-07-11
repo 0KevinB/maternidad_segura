@@ -4,6 +4,7 @@ import { FormularioDatosComponent } from './pages/formulario-datos/formulario-da
 import { FormularioHabitosComponent } from './pages/formulario-habitos/formulario-habitos.component';
 import { ResultadosComponent } from './pages/resultados/resultados.component';
 import { ContactoProfesionalComponent } from './pages/contacto-profesional/contacto-profesional.component';
+import { LoginComponent } from './pages/login/login.component';
 
 
 export const routes: Routes = [
@@ -11,6 +12,7 @@ export const routes: Routes = [
   { path: 'inicio', component: InicioComponent },
   { path: 'contacto-profesional', component: ContactoProfesionalComponent },
   { path: 'registro', component: FormularioDatosComponent },
-  { path: 'calculadora/2', component: FormularioHabitosComponent },
+  { path: 'calculadora/1', component: FormularioHabitosComponent },
   { path: 'resultados', component: ResultadosComponent },
+  { path: 'login', component: LoginComponent },
 ];

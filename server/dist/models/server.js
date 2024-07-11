@@ -16,6 +16,7 @@ exports.Server = void 0;
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const userRoutes_1 = __importDefault(require("../routes/userRoutes"));
+const medicoRoutes_1 = __importDefault(require("../routes/medicoRoutes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -32,6 +33,7 @@ class Server {
     }
     routes() {
         this.app.use('/usuarios', userRoutes_1.default);
+        this.app.use('/medicos', medicoRoutes_1.default);
     }
     middlewares() {
         this.app.use(express_1.default.json());

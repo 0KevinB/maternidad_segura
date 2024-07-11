@@ -6,11 +6,12 @@ import { NotificationService } from '../../services/notification.service';
 import { User } from '../../interfaces/user';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../components/footer/footer.component';
+import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-formulario-datos',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, FooterComponent,],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, FooterComponent, HeaderComponent],
   templateUrl: './formulario-datos.component.html',
   styleUrl: './formulario-datos.component.css'
 })

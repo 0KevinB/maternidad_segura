@@ -1,1 +1,22 @@
-<p>contacto-profesional works!</p>
+<app-header> </app-header>
+
+<h2> Contacto médico </h2>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 mb-4" *ngFor="let medico of dato_medico">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ medico.nombres }} {{medico.apellidos}}</h5>
+                    <p class="card-text">{{ medico.correo }}</p>
+                    <p class="card-text">{{ medico.telefono }}</p>
+                    <a href="#" class="btn btn-primary">Contactar</a>
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>
+
+
+
+    <app-footer> </app-footer>

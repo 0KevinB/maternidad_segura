@@ -1,6 +1,7 @@
 import express from "express"
 import cors from "cors";
 import userRoutes from '../routes/userRoutes'
+import medicoRoutes from "../routes/medicoRoutes";
 
 export class Server {
     private app: express.Application;
@@ -23,6 +24,7 @@ export class Server {
 
     routes() {
         this.app.use('/usuarios', userRoutes)
+        this.app.use('/medicos', medicoRoutes)
     }
 
     middlewares() {

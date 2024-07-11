@@ -63,6 +63,7 @@ gap: 17px;
   width: 35%;
 }
 .footer-center p {
+    margin-top: 10px;
     width: 310.356px;
     color: #000;
     font-feature-settings: 'clig' off, 'liga' off;
@@ -119,17 +120,17 @@ gap: 17px;
 /* Footer Right */
 
 .footer-distributed .footer-right{
-  width: 20%;
+  width: 22%;
 }
-.footer-right li{
+.contaco-footer{
     color: var(--Neutral-600, #6F6C90);
+    margin-top: 15px;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Poppins;
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 111.111% */
-    list-style: none;
+    line-height: 15px; /* 111.111% */
     }
     
 /* If you don't want the footer to be responsive, remove these media queries */

@@ -1,4 +1,4 @@
-.navbar{
+.navbar {
     background: #F8F8F8;
     display: flex;
     justify-content: space-between;
@@ -8,13 +8,24 @@
     height: 150px;
 }
 
-.options .bttn-nav{
+.options .bttn-nav {
+    display: flex;
+    align-self: center;
     color: #3F3F3F;
     margin: 0px 15px 0px;
     text-decoration: none;
+    text-align: center;
 }
 
-.options .bttn-nav:hover{
+.options .bttn-nav:hover {
     color: #121481;
     border-bottom: solid 1px #121481;
+}
+
+.options .bttn-cuenta {
+    background: #121481;
+}
+
+.options .bttn-cuenta:hover {
+    background: #050651;
 }
