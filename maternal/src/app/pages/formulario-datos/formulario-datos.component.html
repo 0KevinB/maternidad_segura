@@ -1,167 +1,278 @@
 <app-header></app-header>
-<div class>
-    <div class="container mt-5 mb-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
 
-                <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
-                    <h2 class="titulo-registro">Registro de Usuario</h2>
-
-                    <!-- Nombres y Apellidos -->
-                    <div class="row form-row">
-                        <div class="form-group col-md-6 py-1">
-                            <label class="form-label" for="inputNombres">Nombres</label>
-                            <input type="text" class="form-control" formControlName="nombre"
-                                placeholder="Ingrese su nombre">
-                            <!-- Alerta Nombres -->
-                            <div class="col-md-12 py-1.5">
-                                <div *ngIf="
-                  myForm.get('nombre')?.invalid && myForm.get('nombre')?.touched
-                " class="alert alert-danger">
-                                    <div *ngIf="myForm.get('nombre')?.errors?.['required']">
-                                        El nombre es obligatorio
-                                    </div>
-                                    <div *ngIf="myForm.get('nombre')?.errors?.['pattern']">
-                                        El nombre debe contener solo letras
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6 py-1">
-                            <label class="form-label" for="inputApellidos">Apellidos</label>
-                            <input type="text" class="form-control" formControlName="apellidos"
-                                placeholder="Ingrese sus apellidos">
-                            <!-- Agrega la validación de apellidos según tus requisitos -->
-                            <!-- Alerta Apellido -->
-                            <div class="col-md-12  py-1.5">
-                                <div *ngIf="
-                myForm.get('apellidos')?.invalid &&
-                myForm.get('apellidos')?.touched
-              " class="alert alert-danger">
-                                    <div *ngIf="myForm.get('apellidos')?.errors?.['required']">
-                                        El apellido es obligatorio
-                                    </div>
-                                    <div *ngIf="myForm.get('apellidos')?.errors?.['pattern']">
-                                        El apellido debe contener solo letras
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row form-row">
-                        <div class="form-group col-md-6 py-1">
-                            <label class="form-label" for="inputTelefono">Teléfono</label>
-                            <input type="text" class="form-control" formControlName="telefono"
-                                placeholder="Ingrese su teléfono">
-                            <!-- Agrega la validación de teléfono según tus requisitos -->
-                            <!-- Alerta Teléfono -->
-                            <div class="col-md-12  py-1.5">
-                                <div *ngIf="
-                  myForm.get('telefono')?.invalid &&
-                  myForm.get('telefono')?.touched
-                " class="alert alert-danger">
-                                    <div *ngIf="myForm.get('telefono')?.errors?.['required']">
-                                        El teléfono es obligatorio
-                                    </div>
-                                    <div *ngIf="myForm.get('telefono')?.errors?.['pattern']">
-                                        El teléfono debe contener solo números
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-
-                        <div class="row form-row">
-                        <div class="form-group col-md-6 py-1">
-                            <label class="form-label" for="inputEmail">Correo Electrónico</label>
-                            <input type="email" class="form-control" formControlName="correo"
-                                placeholder="Ingrese su correo electrónico">
-                            <!-- Alerta Email -->
-                            <div class="col-md-12 py-1.5">
-                                <div *ngIf="
-                  myForm.get('correo')?.invalid &&
-                  myForm.get('correo')?.touched
-                " class="alert alert-danger">
-                                    <div *ngIf="myForm.get('correo')?.errors?.['required']">
-                                        El correo electrónico es obligatorio
-                                    </div>
-                                    <div *ngIf="myForm.get('correo')?.errors?.['pattern']">
-                                        El correo electrónico debe contener un formato válido
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6 py-1">
-                            <label class="form-label" for="inputFecha">Fecha de nacimiento</label>
-                            <input type="text" class="form-control" formControlName="fecha_nacimiento"
-                                placeholder="Ingrese su contraseña">
-                            <label class="form-label" for="inputPassword">contraseña</label>
-                            <input type="password" class="form-control" formControlName=contraseña
-                                placeholder="Ingrese su contraseña">
-                            <!--Alerta contraseña -->
-                            <div class="col-md-12 py-1.5">
-                                <div *ngIf="
-                                myForm.get('contraseña')?.invalid &&
-                                myForm.get('contraseña')?.touched
-                              " class="alert alert-danger">
-                                    <div *ngIf="myForm.get('contraseña')?.errors?.['required']">
-                                        La contraseña es obligatoria
-                                    </div>
-                                    <div *ngIf="myForm.get('contraseña')?.errors?.['pattern']">
-                                        La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una
-                                        letra minúscula y un
-                                        número
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="form-group col-md-6 py-1">
-                        <label class="form-label" for="inputPasswordConfirm">Confirmar contraseña</label>
-                        <input type="password" class="form-control" formControlName="passwordConfirm"
-                            placeholder="Confirme su contraseña">
-                        <!-- Alerta Confirmación de contraseña -->
-                        <div class="col-md-12 py-1.5 ">
-                            <div *ngIf="
-                  myForm.get('passwordConfirm')?.invalid &&
-                  myForm.get('passwordConfirm')?.touched
-                " class="alert alert-danger">
-                                <div *ngIf="myForm.get('passwordConfirm')?.errors?.['required']">
-                                    La confirmación de la contraseña es obligatoria
-                                </div>
-                                <div *ngIf="myForm.get('passwordConfirm')?.errors?.['pattern']">
-                                    La confirmación de la contraseña debe contener al menos 8 caracteres, una letra
-                                    mayúscula, una letra
-                                    minúscula y un número
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Términos y Condiciones -->
-                    <div class="form-group my-3 ms-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" formControlName="terminos" id="gridCheck">
-                            <label class="form-check-label" for="gridCheck">
-                                He leído y acepto los <a href="#">términos y condiciones de uso</a>
-                            </label>
-
-                        </div>
-                    </div>
-
-                    <div class="d-grid">
-                        <button class="btn btn-primary btn-dark" [disabled]="myForm.invalid" type="submit">
-                            Crear
-                        </button>
-                    </div>
-
-                </form>
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <!-- Datos Médicos -->
+    <section class="container mt-4">
+        <h2>Datos Médicos</h2>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputAltura">Altura (cm)</label>
+                <input type="number" class="form-control" id="inputAltura" formControlName="altura"
+                    placeholder="Altura">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPeso">Peso (kg)</label>
+                <input type="number" class="form-control" id="inputPeso" formControlName="peso" placeholder="Peso">
             </div>
         </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>¿Sufre de hipertensión?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="hipertensionSi" formControlName="hipertension"
+                        value=1>
+                    <label class="form-check-label" for="hipertensionSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="hipertensionNo" formControlName="hipertension"
+                        value=0>
+                    <label class="form-check-label" for="hipertensionNo">No</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label>¿Sufre de hipotiroidismo?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="hipotiroidismoSi"
+                        formControlName="hipotiroidismo" value=1>
+                    <label class="form-check-label" for="hipotiroidismoSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="hipotiroidismoNo"
+                        formControlName="hipotiroidismo" value=0>
+                    <label class="form-check-label" for="hipotiroidismoNo">No</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>¿Sufre de hipertiroidismo?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="hipertiroidismoSi"
+                        formControlName="hipertiroidismo" value=1>
+                    <label class="form-check-label" for="hipertiroidismoSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="hipertiroidismoNo"
+                        formControlName="hipertiroidismo" value=0>
+                    <label class="form-check-label" for="hipertiroidismoNo">No</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label>¿Sufre de asma?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="asmaSi" formControlName="asma" value=1>
+                    <label class="form-check-label" for="asmaSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="asmaNo" formControlName="asma" value=0>
+                    <label class="form-check-label" for="asmaNo">No</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>¿Sufre de cáncer?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cancerSi" formControlName="cancer" value=1>
+                    <label class="form-check-label" for="cancerSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cancerNo" formControlName="cancer" value=0>
+                    <label class="form-check-label" for="cancerNo">No</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label>¿Sufre de alguna ETS?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="etsSi" formControlName="ets" value=1>
+                    <label class="form-check-label" for="etsSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="etsNo" formControlName="ets" value=0>
+                    <label class="form-check-label" for="etsNo">No</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>¿Sufre de ansiedad?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="ansiedadSi" formControlName="ansiedad" value=1>
+                    <label class="form-check-label" for="ansiedadSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="ansiedadNo" formControlName="ansiedad" value=0>
+                    <label class="form-check-label" for="ansiedadNo">No</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label>¿Sufre de depresión?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="depresiónSi" formControlName="depresión" value=1>
+                    <label class="form-check-label" for="depresiónSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="depresiónNo" formControlName="depresión" value=0>
+                    <label class="form-check-label" for="depresiónNo">No</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>¿Sufre de diabetes?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="diabetesSi" formControlName="diabetes" value=1>
+                    <label class="form-check-label" for="diabetesSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="diabetesNo" formControlName="diabetes" value=0>
+                    <label class="form-check-label" for="diabetesNo">No</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label>¿Sufre de otra enfermedad renal?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="otraEnfermedadSi" formControlName="otraEnfermedad"
+                        value=1>
+                    <label class="form-check-label" for="otraEnfermedadSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="otraEnfermedadNo" formControlName="otraEnfermedad"
+                        value=0>
+                    <label class="form-check-label" for="otraEnfermedadNo">No</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>¿Sufre de otra enfermedad cardiaca?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaSi" formControlName="cesarea" value=1>
+                    <label class="form-check-label" for="cesareaSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaNo" formControlName="cesarea" value=0>
+                    <label class="form-check-label" for="cesareaNo">No</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label>¿Ha tenido una cesárea previa?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="otraEnfermedadSi" formControlName="otraEnfermedad"
+                        value=1>
+                    <label class="form-check-label" for="otraEnfermedadSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="otraEnfermedadNo" formControlName="otraEnfermedad"
+                        value=0>
+                    <label class="form-check-label" for="otraEnfermedadNo">No</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>¿Ha tenido una cesárea previa?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaSi" formControlName="cesarea" value=1>
+                    <label class="form-check-label" for="cesareaSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaNo" formControlName="cesarea" value=0>
+                    <label class="form-check-label" for="cesareaNo">No</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label>¿Ha tenido una cesárea previa?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaSi" formControlName="cesarea" value=1>
+                    <label class="form-check-label" for="cesareaSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaNo" formControlName="cesarea" value=0>
+                    <label class="form-check-label" for="cesareaNo">No</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>¿Ha tenido una cesárea previa?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaSi" formControlName="cesarea" value=1>
+                    <label class="form-check-label" for="cesareaSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaNo" formControlName="cesarea" value=0>
+                    <label class="form-check-label" for="cesareaNo">No</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label>¿Ha tenido una cesárea previa?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaSi" formControlName="cesarea" value=1>
+                    <label class="form-check-label" for="cesareaSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaNo" formControlName="cesarea" value=0>
+                    <label class="form-check-label" for="cesareaNo">No</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>¿Ha tenido una cesárea previa?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaSi" formControlName="cesarea" value=1>
+                    <label class="form-check-label" for="cesareaSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaNo" formControlName="cesarea" value=0>
+                    <label class="form-check-label" for="cesareaNo">No</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label>¿Ha tenido una cesárea previa?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaSi" formControlName="cesarea" value=1>
+                    <label class="form-check-label" for="cesareaSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaNo" formControlName="cesarea" value=0>
+                    <label class="form-check-label" for="cesareaNo">No</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>¿Ha tenido una cesárea previa?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaSi" formControlName="cesarea" value=1>
+                    <label class="form-check-label" for="cesareaSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaNo" formControlName="cesarea" value=0>
+                    <label class="form-check-label" for="cesareaNo">No</label>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label>¿Ha tenido una cesárea previa?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaSi" formControlName="cesarea" value=1>
+                    <label class="form-check-label" for="cesareaSi">Sí</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="cesareaNo" formControlName="cesarea" value=0>
+                    <label class="form-check-label" for="cesareaNo">No</label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="d-grid">
+        <button class="btn btn-primary btn-dark" [disabled]="myForm.invalid" type="submit">
+            Crear
+        </button>
     </div>
-    <app-footer>
-    </app-footer>
-</div>
+</form>
+
+<!-- Footer -->
+<app-footer></app-footer>

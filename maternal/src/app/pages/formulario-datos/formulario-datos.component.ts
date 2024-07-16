@@ -50,7 +50,6 @@ export class FormularioDatosComponent {
       telefono: this.myForm.value.telefono,
       fecha_nacimiento: this.myForm.value.fecha_nacimiento
     }
-    console.log(user);
 
     this._userService.singup(user).subscribe(data => {
       console.log(data);
