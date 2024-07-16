@@ -1,7 +1,8 @@
-import express from "express"
+import express from "express";
 import cors from "cors";
-import userRoutes from '../routes/userRoutes'
+import userRoutes from "../routes/userRoutes";
 import medicoRoutes from "../routes/medicoRoutes";
+import { exec } from "child_process";
 
 export class Server {
     private app: express.Application;
@@ -18,13 +19,13 @@ export class Server {
 
     listen() {
         this.app.listen(this.port, () => {
-            console.log("Aplicacion corriendo en el puerto: " + this.port)
+            console.log("Aplicacion corriendo en el puerto: " + this.port);
         });
     }
 
     routes() {
-        this.app.use('/usuarios', userRoutes)
-        this.app.use('/medicos', medicoRoutes)
+        this.app.use('/usuarios', userRoutes);
+        this.app.use('/medicos', medicoRoutes);
     }
 
     middlewares() {
@@ -38,7 +39,6 @@ export class Server {
 
     async dbConnect() {
         try {
-
             console.log("Connect");
         } catch (error) {
             console.log("Unable to connect: ", error);

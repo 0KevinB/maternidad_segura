@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import connection from '../models/db';
 import jwt from 'jsonwebtoken';
+import { RowDataPacket } from 'mysql2';
 
 export const CrearUsuario = async (req: Request, res: Response) => {
   const { nombre, apellido, correo, contraseña, fecha_nacimiento, telefono } = req.body;
@@ -476,3 +477,111 @@ export const CrearActividadFisica = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error al crear la información de actividad física' });
   }
 };
+
+async function obtenerDatosUsuario(usuario_id: string): Promise<any> {
+  try {
+    console.log('usuario_id recibido:', usuario_id);
+    const usuario = await queryPromise(
+      'SELECT id, nombre, apellido, correo, fecha_nacimiento FROM usuario WHERE id = ?',
+      [usuario_id]
+    ) as RowDataPacket[];
+
+    if (usuario.length === 0) {
+      throw new Error('Usuario no encontrado');
+    }
+
+    // Obtener datos médicos
+    const datosMedicos = await queryPromise(
+      'SELECT * FROM datos_medicos WHERE usuario_id = ?',
+      [usuario_id]
+    ) as RowDataPacket[];
+
+    // Obtener antecedentes obstétricos
+    const antecedentesObstetricos = await queryPromise(
+      'SELECT * FROM antecedentes_obstetricos WHERE usuario_id = ?',
+      [usuario_id]
+    ) as RowDataPacket[];
+
+    // Obtener información del embarazo actual
+    const embarazoActual = await queryPromise(
+      'SELECT * FROM embarazo_actual WHERE usuario_id = ?',
+      [usuario_id]
+    ) as RowDataPacket[];
+
+    // Obtener hábitos
+    const habitos = await queryPromise(
+      'SELECT * FROM habitos WHERE usuario_id = ?',
+      [usuario_id]
+    ) as RowDataPacket[];
+
+    // Obtener información nutricional
+    const nutricion = await queryPromise(
+      'SELECT * FROM nutricion WHERE usuario_id = ?',
+      [usuario_id]
+    ) as RowDataPacket[];
+
+    // Obtener información de actividad física
+    const actividadFisica = await queryPromise(
+      'SELECT * FROM actividad_fisica WHERE usuario_id = ?',
+      [usuario_id]
+    ) as RowDataPacket[];
+
+    // Combinar todos los datos
+    return {
+      usuario: usuario[0],
+      datosMedicos: datosMedicos[0] || null,
+      antecedentesObstetricos: antecedentesObstetricos[0] || null,
+      embarazoActual: embarazoActual[0] || null,
+      habitos: habitos[0] || null,
+      nutricion: nutricion[0] || null,
+      actividadFisica: actividadFisica[0] || null
+    };
+  } catch (error) {
+    console.error('Error al obtener datos del usuario:', error);
+    throw error;
+  }
+}
+
+// Función auxiliar para promisificar las consultas a la base de datos
+function queryPromise(sql: string, values: any[]): Promise<RowDataPacket[]> {
+  return new Promise((resolve, reject) => {
+    connection.query(sql, values, (error: any, results: RowDataPacket[]) => {
+      if (error) return reject(error);
+      resolve(results as RowDataPacket[]);
+    });
+  });
+}
+
+export default obtenerDatosUsuario;
+
+export const ObtenerRecomendaciones = async (req: Request, res: Response) => {
+  const { usuario_id } = req.params;
+
+  try {
+    const userData = await obtenerDatosUsuario(usuario_id);
+    const recomendaciones = generarRecomendaciones(userData);
+    res.status(200).json({ recomendaciones });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener recomendaciones' });
+  }
+};
+
+function generarRecomendaciones(userData: any) {
+  // Aquí implementarías la lógica para generar recomendaciones
+  // Esto podría ser una llamada a una API de IA o un conjunto de reglas
+  // Por ejemplo:
+  let recomendaciones = [];
+
+  if (userData.datos_medicos.hipertension) {
+    recomendaciones.push("Controle regularmente su presión arterial");
+  }
+
+  if (userData.habitos.tabaco) {
+    recomendaciones.push("Considere dejar de fumar para mejorar su salud");
+  }
+
+  // Añade más reglas según sea necesario
+
+  return recomendaciones;
+}

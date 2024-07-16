@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CrearActividadFisica = exports.CrearNutricion = exports.CrearHabitos = exports.CrearEmbarazoActual = exports.CrearAntecedentesObstetricos = exports.CrearDatosMedicos = exports.LoginUsuario = exports.CrearUsuario = void 0;
+exports.ObtenerRecomendaciones = exports.CrearActividadFisica = exports.CrearNutricion = exports.CrearHabitos = exports.CrearEmbarazoActual = exports.CrearAntecedentesObstetricos = exports.CrearDatosMedicos = exports.LoginUsuario = exports.CrearUsuario = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const db_1 = __importDefault(require("../models/db"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -382,3 +382,78 @@ const CrearActividadFisica = (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.CrearActividadFisica = CrearActividadFisica;
+function obtenerDatosUsuario(usuario_id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            console.log('usuario_id recibido:', usuario_id);
+            const usuario = yield queryPromise('SELECT id, nombre, apellido, correo, fecha_nacimiento FROM usuario WHERE id = ?', [usuario_id]);
+            if (usuario.length === 0) {
+                throw new Error('Usuario no encontrado');
+            }
+            // Obtener datos médicos
+            const datosMedicos = yield queryPromise('SELECT * FROM datos_medicos WHERE usuario_id = ?', [usuario_id]);
+            // Obtener antecedentes obstétricos
+            const antecedentesObstetricos = yield queryPromise('SELECT * FROM antecedentes_obstetricos WHERE usuario_id = ?', [usuario_id]);
+            // Obtener información del embarazo actual
+            const embarazoActual = yield queryPromise('SELECT * FROM embarazo_actual WHERE usuario_id = ?', [usuario_id]);
+            // Obtener hábitos
+            const habitos = yield queryPromise('SELECT * FROM habitos WHERE usuario_id = ?', [usuario_id]);
+            // Obtener información nutricional
+            const nutricion = yield queryPromise('SELECT * FROM nutricion WHERE usuario_id = ?', [usuario_id]);
+            // Obtener información de actividad física
+            const actividadFisica = yield queryPromise('SELECT * FROM actividad_fisica WHERE usuario_id = ?', [usuario_id]);
+            // Combinar todos los datos
+            return {
+                usuario: usuario[0],
+                datosMedicos: datosMedicos[0] || null,
+                antecedentesObstetricos: antecedentesObstetricos[0] || null,
+                embarazoActual: embarazoActual[0] || null,
+                habitos: habitos[0] || null,
+                nutricion: nutricion[0] || null,
+                actividadFisica: actividadFisica[0] || null
+            };
+        }
+        catch (error) {
+            console.error('Error al obtener datos del usuario:', error);
+            throw error;
+        }
+    });
+}
+// Función auxiliar para promisificar las consultas a la base de datos
+function queryPromise(sql, values) {
+    return new Promise((resolve, reject) => {
+        db_1.default.query(sql, values, (error, results) => {
+            if (error)
+                return reject(error);
+            resolve(results);
+        });
+    });
+}
+exports.default = obtenerDatosUsuario;
+const ObtenerRecomendaciones = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { usuario_id } = req.params;
+    try {
+        const userData = yield obtenerDatosUsuario(usuario_id);
+        const recomendaciones = generarRecomendaciones(userData);
+        res.status(200).json({ recomendaciones });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener recomendaciones' });
+    }
+});
+exports.ObtenerRecomendaciones = ObtenerRecomendaciones;
+function generarRecomendaciones(userData) {
+    // Aquí implementarías la lógica para generar recomendaciones
+    // Esto podría ser una llamada a una API de IA o un conjunto de reglas
+    // Por ejemplo:
+    let recomendaciones = [];
+    if (userData.datos_medicos.hipertension) {
+        recomendaciones.push("Controle regularmente su presión arterial");
+    }
+    if (userData.habitos.tabaco) {
+        recomendaciones.push("Considere dejar de fumar para mejorar su salud");
+    }
+    // Añade más reglas según sea necesario
+    return recomendaciones;
+}
