@@ -91,6 +91,32 @@
                     </div>
                 </div>
             </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>¿Sufre de ansiedad?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ansiedad" id="ansiedadSi" value="si">
+                        <label class="form-check-label" for="ansiedadSi">Sí</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ansiedad" id="ansiedadNo" value="no">
+                        <label class="form-check-label" for="ansiedadNo">No</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>¿Sufre de depresión?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="depresión" id="depresiónSi" value="si">
+                        <label class="form-check-label" for="depresiónSi">Sí</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="depresión" id="depresiónNo" value="no">
+                        <label class="form-check-label" for="depresiónNo">No</label>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label>¿Sufre de diabetes?</label>
@@ -104,7 +130,7 @@
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label>¿Sufre de otra enfermedad crónica?</label>
+                    <label>¿Sufre de otra enfermedad renal?</label>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="otraEnfermedad" id="otraEnfermedadSi" value="si">
                         <label class="form-check-label" for="otraEnfermedadSi">Sí</label>
@@ -115,7 +141,19 @@
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label>¿Ha tenido alguna cesárea previa?</label>
+                    <label>¿Sufre de otra enfermedad cardiaca?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="cesarea" id="cesareaSi" value="si">
+                        <label class="form-check-label" for="cesareaSi">Sí</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="cesarea" id="cesareaNo" value="no">
+                        <label class="form-check-label" for="cesareaNo">No</label>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>¿Toma alguna medicación?</label>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="cesarea" id="cesareaSi" value="si">
                         <label class="form-check-label" for="cesareaSi">Sí</label>
@@ -133,11 +171,11 @@
     <section class="container mt-4">
         <h2>Antecedentes Obstétricos</h2>
         <form>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="numEmbarazosPrevios">¿Ha tenido embarazos previos?</label>
                 <input type="number" class="form-control" id="numEmbarazosPrevios" placeholder="0, 1, 2, ...">
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label>¿Sufrió o sufre de preeclampsia?</label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="preeclampsia" id="preeclampsiaSi" value="si">
@@ -148,7 +186,7 @@
                     <label class="form-check-label" for="preeclampsiaNo">No</label>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label>¿Tuvo un parto prematuro anteriormente?</label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="partoPrematuro" id="partoPrematuroSi" value="si">
@@ -159,7 +197,7 @@
                     <label class="form-check-label" for="partoPrematuroNo">No</label>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label>¿Hemorragias postparto o durante el embarazo?</label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="hemorragias" id="hemorragiasSi" value="si">
@@ -170,7 +208,7 @@
                     <label class="form-check-label" for="hemorragiasNo">No</label>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label>¿Más de una pérdida en el primer trimestre?</label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="perdidaPrimerTrimestre" id="perdidaPrimerTrimestreSi" value="si">
@@ -188,7 +226,7 @@
     <section class="container mt-4">
         <h2>Datos del Embarazo Actual</h2>
         <form>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label>¿Bajo líquido amniótico?</label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="bajoLiquidoAmniotico" id="bajoLiquidoAmnioticoSi" value="si">
@@ -199,7 +237,7 @@
                     <label class="form-check-label" for="bajoLiquidoAmnioticoNo">No</label>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label>¿Exceso de líquido amniótico?</label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="excesoLiquidoAmniotico" id="excesoLiquidoAmnioticoSi" value="si">
@@ -210,7 +248,7 @@
                     <label class="form-check-label" for="excesoLiquidoAmnioticoNo">No</label>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label>¿Anomalía fetal?</label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="anomalíaFetal" id="anomalíaFetalSi" value="si">
@@ -221,7 +259,7 @@
                     <label class="form-check-label" for="anomalíaFetalNo">No</label>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label>¿Crecimiento fetal disminuido?</label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="crecimientoFetalDisminuido" id="crecimientoFetalDisminuidoSi" value="si">
@@ -232,7 +270,7 @@
                     <label class="form-check-label" for="crecimientoFetalDisminuidoNo">No</label>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label>¿Fecundación in vitro?</label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="fecundacionInVitro" id="fecundacionInVitroSi" value="si">
@@ -243,7 +281,7 @@
                     <label class="form-check-label" for="fecundacionInVitroNo">No</label>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label>¿Gestación múltiple?</label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="gestacionMultiple" id="gestacionMultipleSi" value="si">
