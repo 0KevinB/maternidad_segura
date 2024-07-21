@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ObtenerDatosUsuario = exports.CrearActividadFisica = exports.CrearNutricion = exports.CrearHabitos = exports.CrearEmbarazoActual = exports.CrearAntecedentesObstetricos = exports.CrearDatosMedicos = exports.LoginUsuario = exports.CrearUsuario = void 0;
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const db_1 = __importDefault(require("../models/db"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const inference_1 = require("@huggingface/inference");
@@ -40,8 +40,8 @@ const CrearUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             return res.status(400).json({ message: 'El correo ya está registrado' });
         }
         // Encriptar la contraseña
-        const salt = bcrypt_1.default.genSaltSync(10);
-        const hashedPassword = bcrypt_1.default.hashSync(contraseña, salt);
+        const salt = bcryptjs_1.default.genSaltSync(10);
+        const hashedPassword = bcryptjs_1.default.hashSync(contraseña, salt);
         // Insertar el usuario en la base de datos
         yield new Promise((resolve, reject) => {
             const sql = `
@@ -83,7 +83,7 @@ const LoginUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
         const usuario = existingUser[0];
         // Verificar la contraseña
-        const contraseñaValida = bcrypt_1.default.compareSync(contraseña, usuario.contraseña);
+        const contraseñaValida = bcryptjs_1.default.compareSync(contraseña, usuario.contraseña);
         if (!contraseñaValida) {
             return res.status(400).json({ message: 'Correo o contraseña incorrectos' });
         }
