@@ -46,7 +46,7 @@ class Server {
     dbConnect() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log("Connect");
+                console.log("Connect to database");
             }
             catch (error) {
                 console.log("Unable to connect: ", error);

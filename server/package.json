@@ -10,7 +10,8 @@
     "watch": "tsc --watch",
     "copy-static": "copyfiles -u 1 src/**/*.{png,jpg,jpeg,gif} dist/",
     "clean": "rimraf dist",
-    "prebuild": "npm run clean"
+    "prebuild": "npm run clean",
+    "db-init": "node scripts/db-init.js"
   },
   "keywords": [],
   "author": "",

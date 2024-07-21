@@ -39,7 +39,7 @@ export class Server {
 
     async dbConnect() {
         try {
-            console.log("Connect");
+            console.log("Connect to database");
         } catch (error) {
             console.log("Unable to connect: ", error);
         }
