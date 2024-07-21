@@ -497,11 +497,12 @@ export const ObtenerDatosUsuario = async (req: Request, res: Response) => {
     // Obtener recomendaciones locales
     // const recomendaciones = await obtenerRecomendacionesIA(promptParaIA, datosUsuario);
     const recomendaciones = await obtenerRecomendacionesLocales(datosUsuario);
-
+    const resultados = await calcularPorcentajesSeguridad(datosUsuario)
     // Incluir el prompt y las recomendaciones en la respuesta
     res.status(200).json({
       datosUsuario,
-      recomendaciones
+      recomendaciones,
+      resultados
     });
   } catch (error) {
     console.error(error);
@@ -652,54 +653,227 @@ async function obtenerRecomendacionesIA(prompt: string, datosUsuario: any): Prom
     return obtenerRecomendacionesLocales(datosUsuario);
   }
 } */
-function obtenerRecomendacionesLocales(datosUsuario: any): string {
-  const {
-    datosMedicos,
-    antecedentesObstetricos,
-    embarazoActual,
-    habitos,
-    nutricion,
-    actividadFisica
-  } = datosUsuario;
-
-  const recomendaciones = [
-    "1. Control médico:",
-    "- Asista a citas prenatales regularmente según lo recomendado por su médico.",
-    datosMedicos.hipertension ? "- Monitoree su presión arterial diariamente y siga las indicaciones médicas para controlarla." : "",
-    datosMedicos.ansiedad ? "- Discuta con su médico opciones para manejar la ansiedad durante el embarazo." : "",
-    antecedentesObstetricos.parto_prematuro ? "- Realice pruebas adicionales para monitorear el riesgo de parto prematuro." : "",
-    
-    "2. Nutrición:",
-    "- Consuma una dieta balanceada rica en frutas, verduras, proteínas magras y granos integrales.",
-    "- Tome suplementos prenatales que incluyan ácido fólico, hierro y calcio según lo recomendado por su médico.",
-    "- Evite alimentos crudos o poco cocidos, y limite el consumo de cafeína.",
-    "- Manténgase bien hidratada bebiendo al menos 8-10 vasos de agua al día.",
-    
-    "3. Actividad física:",
-    actividadFisica.actividad_fisica ? `- Continúe con su actividad física ${actividadFisica.frecuencia_actividad.toLowerCase()}, ${actividadFisica.tiempo_actividad} por sesión. Consulte a su médico sobre la intensidad adecuada.` : "- Consulte con su médico sobre la actividad física adecuada durante el embarazo.",
-    "- Considere actividades de bajo impacto como caminar, nadar o yoga prenatal.",
-    "- Evite actividades que impliquen riesgo de caídas o golpes en el abdomen.",
-    "- Escuche a su cuerpo y descanse cuando lo necesite.",
-    
-    "4. Hábitos saludables:",
-    habitos.bebidas_alcoholicas ? "- Deje de consumir alcohol inmediatamente. El alcohol puede causar graves problemas en el desarrollo fetal." : "",
-    habitos.tabaco ? "- Deje de fumar lo antes posible. El tabaco aumenta el riesgo de complicaciones en el embarazo." : "",
-    !habitos.hogar_libre_tabaco ? "- Evite la exposición al humo de segunda mano." : "",
-    "- Considere unirse a un programa de apoyo para dejar de fumar y beber si es necesario.",
-    
-    "5. Cuidados especiales:",
-    antecedentesObstetricos.parto_prematuro ? "- Esté atenta a los signos de parto prematuro como contracciones, sangrado o pérdida de líquido." : "",
-    "- Descanse frecuentemente y evite estar de pie por periodos prolongados.",
-    "- Use medias de compresión si se le recomiendan para mejorar la circulación.",
-    antecedentesObstetricos.perdida ? "- Discuta con su médico sobre la necesidad de medicamentos para prevenir el parto prematuro." : "",
-    
-    "6. Salud mental:",
-    "- Practique técnicas de relajación como meditación o respiración profunda para manejar la ansiedad.",
-    "- Considere la terapia o el asesoramiento psicológico especializado en embarazo si es necesario.",
-    "- Únase a un grupo de apoyo para embarazadas para compartir experiencias y recibir apoyo emocional.",
-    "- Comunique abiertamente sus preocupaciones y sentimientos a su pareja y familia.",
-    "- Mantenga un diario para expresar sus pensamientos y emociones si lo encuentra útil."
-  ];
-
-  return recomendaciones.filter(item => item !== "").join("\n");
-}
+  function obtenerRecomendacionesLocales(datosUsuario: { usuario?: any; datosMedicos: any; antecedentesObstetricos: any; embarazoActual: any; habitos: any; nutricion: any; actividadFisica: any; }) {
+    const {
+      datosMedicos,
+      antecedentesObstetricos,
+      embarazoActual,
+      habitos,
+      nutricion,
+      actividadFisica
+    } = datosUsuario;
+  
+    const recomendaciones = [
+      "1. Control médico:",
+      "- Asista a citas prenatales regularmente según lo recomendado por su médico.",
+      datosMedicos.hipertension ? "- Monitoree su presión arterial diariamente y siga las indicaciones médicas para controlarla." : "",
+      datosMedicos.diabetes ? "- Controle sus niveles de azúcar en sangre regularmente y siga una dieta específica para diabetes gestacional." : "",
+      datosMedicos.hipertiroidismo || datosMedicos.hipotiroidismo ? "- Realice controles de función tiroidea según las indicaciones de su endocrinólogo." : "",
+      datosMedicos.asma ? "- Mantenga su plan de manejo del asma y consulte con su médico sobre ajustes necesarios durante el embarazo." : "",
+      datosMedicos.ets ? "- Siga el tratamiento indicado para enfermedades de transmisión sexual y realice controles adicionales para proteger al feto." : "",
+      datosMedicos.enfermedad_cardiaca ? "- Consulte con un cardiólogo para un seguimiento especializado durante el embarazo." : "",
+      datosMedicos.enfermedad_renal ? "- Realice controles renales frecuentes y siga una dieta baja en sodio si es necesario." : "",
+      antecedentesObstetricos.preeclampsia ? "- Esté atenta a los signos de preeclampsia como hinchazón, dolor de cabeza intenso o cambios en la visión." : "",
+      
+      "2. Nutrición:",
+      "- Consuma una dieta balanceada rica en frutas, verduras, proteínas magras y granos integrales.",
+      "- Tome suplementos prenatales que incluyan ácido fólico, hierro y calcio según lo recomendado por su médico.",
+      "- Evite alimentos crudos o poco cocidos, y limite el consumo de cafeína.",
+      "- Manténgase bien hidratada bebiendo al menos 8-10 vasos de agua al día.",
+      nutricion.dieta === 1 ? "- Consulte con un nutricionista para asegurar que su dieta vegetariana/vegana cubra todas sus necesidades nutricionales." : "",
+      nutricion.comida_rapida >= 3 ? "- Reduzca el consumo de comida rápida y opte por opciones más saludables y caseras." : "",
+      nutricion.numero_vasos < 6 ? "- Aumente su ingesta de agua. Intente beber al menos 8 vasos al día." : "",
+      
+      "3. Actividad física:",
+      actividadFisica.actividad_fisica ? `- Continúe con su actividad física ${actividadFisica.frecuencia_actividad.toLowerCase()}, ${actividadFisica.tiempo_actividad} por sesión. Consulte a su médico sobre la intensidad adecuada.` : "- Consulte con su médico sobre la actividad física adecuada durante el embarazo.",
+      "- Considere actividades de bajo impacto como caminar, nadar o yoga prenatal.",
+      "- Evite actividades que impliquen riesgo de caídas o golpes en el abdomen.",
+      "- Escuche a su cuerpo y descanse cuando lo necesite.",
+      embarazoActual.gestacion_multiple ? "- Adapte su actividad física a las recomendaciones específicas para embarazos múltiples." : "",
+      
+      "4. Hábitos saludables:",
+      habitos.bebidas_alcoholicas ? "- Deje de consumir alcohol inmediatamente. El alcohol puede causar graves problemas en el desarrollo fetal." : "",
+      habitos.tabaco ? "- Deje de fumar lo antes posible. El tabaco aumenta el riesgo de complicaciones en el embarazo." : "",
+      !habitos.hogar_libre_tabaco ? "- Evite la exposición al humo de segunda mano." : "",
+      habitos.drogas ? "- Deje de consumir drogas inmediatamente y busque ayuda profesional si es necesario." : "",
+      "- Considere unirse a un programa de apoyo para dejar hábitos nocivos si es necesario.",
+      
+      "5. Cuidados especiales:",
+      antecedentesObstetricos.parto_prematuro ? "- Esté atenta a los signos de parto prematuro como contracciones, sangrado o pérdida de líquido." : "",
+      "- Descanse frecuentemente y evite estar de pie por periodos prolongados.",
+      "- Use medias de compresión si se le recomiendan para mejorar la circulación.",
+      antecedentesObstetricos.perdida ? "- Discuta con su médico sobre la necesidad de medicamentos para prevenir el parto prematuro." : "",
+      embarazoActual.bajo_liquido_amniotico ? "- Aumente su ingesta de líquidos y siga las recomendaciones médicas para manejar el bajo líquido amniótico." : "",
+      embarazoActual.alto_liquido_amniotico ? "- Siga las indicaciones médicas para manejar el polihidramnios y esté atenta a signos de complicaciones." : "",
+      embarazoActual.anomalía_fetal ? "- Asista a controles especializados para monitorear la anomalía fetal detectada." : "",
+      embarazoActual.crecimiento_disminuido ? "- Siga una dieta especial y controles frecuentes para monitorear el crecimiento fetal." : "",
+      embarazoActual.in_vitro ? "- Siga las recomendaciones específicas para embarazos por fertilización in vitro." : "",
+      
+      "6. Salud mental:",
+      "- Practique técnicas de relajación como meditación o respiración profunda para manejar la ansiedad.",
+      datosMedicos.ansiedad || datosMedicos.depresion ? "- Continúe con su tratamiento para ansiedad/depresión bajo supervisión médica." : "",
+      "- Considere la terapia o el asesoramiento psicológico especializado en embarazo si es necesario.",
+      "- Únase a un grupo de apoyo para embarazadas para compartir experiencias y recibir apoyo emocional.",
+      "- Comunique abiertamente sus preocupaciones y sentimientos a su pareja y familia.",
+      "- Mantenga un diario para expresar sus pensamientos y emociones si lo encuentra útil."
+    ];
+  
+    return recomendaciones.filter(item => item !== "").join("\n");
+  }
+  async function calcularPorcentajesSeguridad(datosUsuario: { usuario?: any; datosMedicos: any; antecedentesObstetricos: any; embarazoActual: any; habitos: any; nutricion: any; actividadFisica: any; }) {
+    const {
+      usuario,
+      datosMedicos,
+      antecedentesObstetricos,
+      embarazoActual,
+      habitos,
+      nutricion,
+      actividadFisica
+    } = datosUsuario;
+  
+    const resultados = {
+      datosMedicos: calcularPorcentajeDatosMedicos(datosMedicos),
+      antecedentesObstetricos: calcularPorcentajeAntecedentesObstetricos(antecedentesObstetricos),
+      embarazoActual: calcularPorcentajeEmbarazoActual(embarazoActual),
+      habitos: calcularPorcentajeHabitos(habitos),
+      nutricion: calcularPorcentajeNutricion(nutricion),
+      actividadFisica: calcularPorcentajeActividadFisica(actividadFisica)
+    };
+  
+    const porcentajeTotal = Object.values(resultados).reduce((sum, valor) => sum + valor, 0) / Object.keys(resultados).length;
+  
+        // Guardar o actualizar los resultados en la base de datos
+        await connection.query(`
+          INSERT INTO resultados (
+            usuario_id, 
+            porcentaje_datos_medicos, 
+            porcentaje_antecedentes_obstetricos, 
+            porcentaje_embarazo_actual, 
+            porcentaje_habitos, 
+            porcentaje_nutricion, 
+            porcentaje_actividad_fisica, 
+            porcentaje_total, 
+            nivel_riesgo_total
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+          ON CONFLICT (usuario_id) DO UPDATE SET
+            porcentaje_datos_medicos = EXCLUDED.porcentaje_datos_medicos,
+            porcentaje_antecedentes_obstetricos = EXCLUDED.porcentaje_antecedentes_obstetricos,
+            porcentaje_embarazo_actual = EXCLUDED.porcentaje_embarazo_actual,
+            porcentaje_habitos = EXCLUDED.porcentaje_habitos,
+            porcentaje_nutricion = EXCLUDED.porcentaje_nutricion,
+            porcentaje_actividad_fisica = EXCLUDED.porcentaje_actividad_fisica,
+            porcentaje_total = EXCLUDED.porcentaje_total,
+            nivel_riesgo_total = EXCLUDED.nivel_riesgo_total
+        `, [
+          datosUsuario.usuario.id,
+          resultados.datosMedicos,
+          resultados.antecedentesObstetricos,
+          resultados.embarazoActual,
+          resultados.habitos,
+          resultados.nutricion,
+          resultados.actividadFisica,
+          porcentajeTotal,
+          getNivelRiesgo(porcentajeTotal)
+        ]);
+    return {
+      porcentajesPorSeccion: resultados,
+      porcentajeTotal: Math.round(porcentajeTotal),
+      nivelRiesgoTotal: getNivelRiesgo(porcentajeTotal)
+    };
+  }
+  
+  function calcularPorcentajeDatosMedicos(datosMedicos: { hipertension: any; diabetes: any; hipertiroidismo: any; hipotiroidismo: any; asma: any; cancer: any; ets: any; ansiedad: any; depresion: any; enfermedad_cardiaca: any; enfermedad_renal: any; }) {
+    let puntosTotales = 100;
+    let puntosRestados = 0;
+  
+    if (datosMedicos.hipertension) puntosRestados += 10;
+    if (datosMedicos.diabetes) puntosRestados += 10;
+    if (datosMedicos.hipertiroidismo || datosMedicos.hipotiroidismo) puntosRestados += 8;
+    if (datosMedicos.asma) puntosRestados += 5;
+    if (datosMedicos.cancer) puntosRestados += 20;
+    if (datosMedicos.ets) puntosRestados += 15;
+    if (datosMedicos.ansiedad || datosMedicos.depresion) puntosRestados += 8;
+    if (datosMedicos.enfermedad_cardiaca) puntosRestados += 15;
+    if (datosMedicos.enfermedad_renal) puntosRestados += 12;
+  
+    return Math.max(0, puntosTotales - puntosRestados);
+  }
+  
+  function calcularPorcentajeAntecedentesObstetricos(antecedentesObstetricos: { preeclampsia: any; parto_prematuro: any; hemorragias: any; perdida: any; }) {
+    let puntosTotales = 100;
+    let puntosRestados = 0;
+  
+    if (antecedentesObstetricos.preeclampsia) puntosRestados += 20;
+    if (antecedentesObstetricos.parto_prematuro) puntosRestados += 25;
+    if (antecedentesObstetricos.hemorragias) puntosRestados += 15;
+    if (antecedentesObstetricos.perdida) puntosRestados += 10;
+  
+    return Math.max(0, puntosTotales - puntosRestados);
+  }
+  
+  function calcularPorcentajeEmbarazoActual(embarazoActual: { bajo_liquido_amniotico: any; alto_liquido_amniotico: any; anomalía_fetal: any; crecimiento_disminuido: any; gestacion_multiple: any; numero_fetos: number; }) {
+    let puntosTotales = 100;
+    let puntosRestados = 0;
+  
+    if (embarazoActual.bajo_liquido_amniotico) puntosRestados += 15;
+    if (embarazoActual.alto_liquido_amniotico) puntosRestados += 12;
+    if (embarazoActual.anomalía_fetal) puntosRestados += 25;
+    if (embarazoActual.crecimiento_disminuido) puntosRestados += 20;
+    if (embarazoActual.gestacion_multiple) puntosRestados += 15;
+    puntosRestados += Math.max(0, embarazoActual.numero_fetos - 1) * 10;
+  
+    return Math.max(0, puntosTotales - puntosRestados);
+  }
+  
+  function calcularPorcentajeHabitos(habitos: { bebidas_alcoholicas: any; frecuencia_alcohol: string; tabaco: any; frecuencia_tabaco: string; drogas: any; hogar_libre_tabaco: any; }) {
+    let puntosTotales = 100;
+    let puntosRestados = 0;
+  
+    if (habitos.bebidas_alcoholicas) {
+      puntosRestados += 30;
+      if (habitos.frecuencia_alcohol === 'Diariamente') puntosRestados += 20;
+    }
+    if (habitos.tabaco) {
+      puntosRestados += 25;
+      if (habitos.frecuencia_tabaco === 'Diariamente') puntosRestados += 15;
+    }
+    if (habitos.drogas) puntosRestados += 40;
+    if (!habitos.hogar_libre_tabaco) puntosRestados += 10;
+  
+    return Math.max(0, puntosTotales - puntosRestados);
+  }
+  
+  function calcularPorcentajeNutricion(nutricion: { dieta: number; frutas: number; verduras: number; comida_rapida: number; numero_vasos: number; }) {
+    let puntosTotales = 100;
+    let puntosRestados = 0;
+  
+    if (nutricion.dieta === 1) puntosRestados += 5; // Dieta vegetariana/vegana
+    if (nutricion.frutas < 2) puntosRestados += 10;
+    if (nutricion.verduras < 2) puntosRestados += 10;
+    if (nutricion.comida_rapida > 2) puntosRestados += 15;
+    if (nutricion.numero_vasos < 6) puntosRestados += 10;
+  
+    return Math.max(0, puntosTotales - puntosRestados);
+  }
+  
+  function calcularPorcentajeActividadFisica(actividadFisica: { actividad_fisica: any; frecuencia_actividad: string; tiempo_actividad: string; }) {
+    let puntosTotales = 100;
+    let puntosRestados = 0;
+  
+    if (!actividadFisica.actividad_fisica) {
+      puntosRestados += 50;
+    } else {
+      if (actividadFisica.frecuencia_actividad === 'Raramente') puntosRestados += 30;
+      if (actividadFisica.tiempo_actividad === 'Menos de 15 minutos') puntosRestados += 20;
+    }
+  
+    return Math.max(0, puntosTotales - puntosRestados);
+  }
+  
+  function getNivelRiesgo(porcentaje: number) {
+    if (porcentaje >= 90) return "Bajo riesgo";
+    if (porcentaje >= 75) return "Riesgo moderado bajo";
+    if (porcentaje >= 60) return "Riesgo moderado";
+    if (porcentaje >= 45) return "Riesgo moderado alto";
+    return "Alto riesgo";
+  }
