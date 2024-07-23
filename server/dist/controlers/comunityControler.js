@@ -84,7 +84,7 @@ exports.obtenerPublicaciones = obtenerPublicaciones;
 const obtenerPublicacionPorId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const { rows } = yield db_1.default.query(`SELECT p.id, p.titulo, p.contenido, p.fecha_creacion, u.nombre AS autor, c.nombre AS categoria
+        const { rows } = yield db_1.default.query(`SELECT p.id, p.titulo, p.contenido, p.fecha_creacion, u.nombre, u.apellido, c.nombre AS categoria
             FROM publicacion p
             JOIN usuario u ON p.usuario_id = u.id
             JOIN categoria c ON p.categoria_id = c.id

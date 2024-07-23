@@ -85,7 +85,7 @@ export const obtenerPublicacionPorId = async (req: Request, res: Response) => {
 
     try {
         const { rows } = await connection.query(
-            `SELECT p.id, p.titulo, p.contenido, p.fecha_creacion, u.nombre AS autor, c.nombre AS categoria
+            `SELECT p.id, p.titulo, p.contenido, p.fecha_creacion, u.nombre, u.apellido, c.nombre AS categoria
             FROM publicacion p
             JOIN usuario u ON p.usuario_id = u.id
             JOIN categoria c ON p.categoria_id = c.id
