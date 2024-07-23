@@ -12,3 +12,38 @@
 .container{
     margin-bottom: 50px;
 }
+
+.comunidad-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .categorias, .publicaciones, .comentarios {
+    flex: 1;
+    margin: 0 10px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    cursor: pointer;
+    padding: 5px 0;
+  }
+  
+  li:hover {
+    text-decoration: underline;
+  }
+  
+  .publicacion, .comentario {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .publicacion:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }

@@ -1,33 +1,65 @@
 <app-header></app-header>
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Comunidad</h1>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Comunidad</h1>
+    
+    <p class="text-center mb-5">
+        ¡Hola! Hemos preparado un apartado para ti, en donde podrás convivir con más mujeres embarazadas, preguntar y responder, recuerda mantener el respeto entre todas 🤗
+    </p>
+    
+    <ng-container *ngIf="!categoriaSeleccionada">
+        <h2 class="mb-4">1. SELECCIONA LA CATEGORÍA</h2>
+        <div *ngFor="let categoria of categorias" 
+             class="category-item d-flex justify-content-between align-items-center"
+             (click)="cargarPublicaciones(categoria.id)">
+            {{ categoria.nombre }}
+            <i class="fas fa-chevron-right"></i>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="categoriaSeleccionada && !publicacionSeleccionada">
+        <h2 class="mb-4">2. PUBLICACIONES</h2>
+        <button class="btn btn-secondary mb-3" (click)="volverACategorias()">Volver a categorías</button>
         
-        <p class="text-center mb-5">
-            ¡Hola! Hemos preparado un apartado para ti, en donde podrás convivir con más mujeres embarazadas, preguntar y responder, recuerda mantener el respeto entre todas 🤗
-        </p>
+        <!-- Formulario para nueva publicación -->
+        <form (ngSubmit)="crearPublicacion()" class="mb-4">
+            <div class="form-group">
+                <input type="text" class="form-control mb-2" [(ngModel)]="nuevaPublicacion.titulo" name="titulo" placeholder="Título de la publicación">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control mb-2" [(ngModel)]="nuevaPublicacion.contenido" name="contenido" placeholder="Contenido de la publicación"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Crear Publicación</button>
+        </form>
 
-        <h2 class="mb-4">1. SELECCIONA EL CATEGORÍA</h2>
-
-        <div class="category-item d-flex justify-content-between align-items-center">
-            Nutrición
+        <div *ngFor="let publicacion of publicaciones" 
+             class="category-item d-flex justify-content-between align-items-center"
+             (click)="cargarComentarios(publicacion.id)">
+            {{ publicacion.titulo }}
             <i class="fas fa-chevron-right"></i>
         </div>
-        <div class="category-item d-flex justify-content-between align-items-center">
-            Ejercicio
-            <i class="fas fa-chevron-right"></i>
-        </div>
-        <div class="category-item d-flex justify-content-between align-items-center">
-            Madres primerizas
-            <i class="fas fa-chevron-right"></i>
-        </div>
-        <div class="category-item d-flex justify-content-between align-items-center">
-            Médicos
-            <i class="fas fa-chevron-right"></i>
-        </div>
-    </div>
+    </ng-container>
 
-    <app-footer></app-footer>
+    <ng-container *ngIf="publicacionSeleccionada">
+        <h2 class="mb-4">3. COMENTARIOS</h2>
+        <button class="btn btn-secondary mb-3" (click)="volverAPublicaciones()">Volver a publicaciones</button>
+        <div class="publicacion mb-4">
+            <h3>{{ publicacionSeleccionada.titulo }}</h3>
+            <p>{{ publicacionSeleccionada.contenido }}</p>
+            <small>Por: {{ publicacionSeleccionada.autor_nombre }} {{ publicacionSeleccionada.autor_apellido }} | {{ publicacionSeleccionada.fecha_creacion | date:'dd/MM/yyyy' }}</small>
+        </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- Formulario para nuevo comentario -->
+        <form (ngSubmit)="crearComentario()" class="mb-4">
+            <div class="form-group">
+                <textarea class="form-control mb-2" [(ngModel)]="nuevoComentario" name="nuevoComentario" placeholder="Escribe tu comentario"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar Comentario</button>
+        </form>
+
+        <div *ngFor="let comentario of comentarios" class="comentario mb-3">
+            <p>{{ comentario.contenido }}</p>
+            <small>Por: {{ comentario.autor_nombre }} {{ comentario.autor_apellido }} | {{ comentario.fecha_creacion | date:'dd/MM/yyyy' }}</small>
+        </div>
+    </ng-container>
+</div>
+<app-footer></app-footer>
