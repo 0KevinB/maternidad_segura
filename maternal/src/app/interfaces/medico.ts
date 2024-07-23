@@ -1,6 +1,6 @@
 export interface Medico{
-    nombres? : string;
-    apellidos? : string;
+    nombre? : string;
+    apellido? : string;
     telefono?: string;
-    correo? : string;
+    email? : string;
 }

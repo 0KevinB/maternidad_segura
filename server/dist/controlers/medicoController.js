@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ObtenerMedicos = void 0;
+exports.CrearMedico = exports.ObtenerMedicos = void 0;
 const db_1 = __importDefault(require("../models/db"));
 const ObtenerMedicos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -25,7 +25,7 @@ const ObtenerMedicos = (req, res) => __awaiter(void 0, void 0, void 0, function*
             });
         });
         // Respuesta exitosa con los datos obtenidos
-        res.status(200).json(medicos);
+        res.status(200).json(medicos.rows);
     }
     catch (error) {
         console.error(error);
@@ -33,3 +33,17 @@ const ObtenerMedicos = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.ObtenerMedicos = ObtenerMedicos;
+const CrearMedico = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { nombre, apellido, especialidad, numero_colegiado, email, telefono } = req.body;
+    try {
+        const { rows } = yield db_1.default.query(`INSERT INTO medicos (nombre, apellido, especialidad, email, telefono)
+           VALUES ($1, $2, $3, $4, $5)
+           RETURNING id`, [nombre, apellido, especialidad, email, telefono]);
+        res.status(201).json({ message: 'Médico creado exitosamente', id: rows[0].id });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al crear el médico' });
+    }
+});
+exports.CrearMedico = CrearMedico;

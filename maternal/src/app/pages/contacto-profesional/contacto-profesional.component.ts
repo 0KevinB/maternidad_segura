@@ -30,7 +30,9 @@ export class ContactoProfesionalComponent implements OnInit{
   }
 
   getMedico() {
-    this.medicoService.getMedicoDetails().subscribe((data)=>{this.dato_medico=data})
+    this.medicoService.getMedicoDetails().subscribe((data)=>{
+      console.log(data  )
+      this.dato_medico=data})
   }
 
 

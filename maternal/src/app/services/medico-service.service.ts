@@ -14,8 +14,8 @@ export class MedicoServiceService {
 
   constructor(private http: HttpClient, private notificationService: NotificationService
   ) {
-    this.myAppUrl = 'https://maternidad-segura.onrender.com';
-    this.myApiUrl = '/medicos/'
+    this.myAppUrl = 'http://localhost:3001/';
+    this.myApiUrl = 'medicos'
   }
 
   getMedicoDetails(): Observable<Medico[]> {
