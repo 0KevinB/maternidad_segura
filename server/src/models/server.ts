@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import userRoutes from "../routes/userRoutes";
 import medicoRoutes from "../routes/medicoRoutes";
+import comunityRoutes from "../routes/comunityRoutes";
 import { exec } from "child_process";
 
 export class Server {
@@ -26,6 +27,7 @@ export class Server {
     routes() {
         this.app.use('/usuarios', userRoutes);
         this.app.use('/medicos', medicoRoutes);
+        this.app.use('/comunidad', comunityRoutes);
     }
 
     middlewares() {

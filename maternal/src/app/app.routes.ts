@@ -7,13 +7,14 @@ import { ContactoProfesionalComponent } from './pages/contacto-profesional/conta
 import { LoginComponent } from './pages/login/login.component';
 import { Calculadora1Component } from './pages/calculadora1/calculadora1.component';
 import { ComunidadComponent } from './pages/comunidad/comunidad.component';
+import { RegistroComponent } from './pages/registro/registro.component';
 
 
 export const routes: Routes = [
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
   { path: 'inicio', component: InicioComponent },
   { path: 'contacto-profesional', component: ContactoProfesionalComponent },
-  { path: 'registro', component: FormularioDatosComponent },
+  { path: 'registro', component: RegistroComponent },
   { path: 'calculadora/1', component: Calculadora1Component },
   { path: 'resultados', component: ResultadosComponent },
   { path: 'login', component: LoginComponent },
