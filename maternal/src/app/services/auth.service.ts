@@ -1,43 +1,54 @@
-// src/app/auth.service.ts
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  private isAuthenticated = false;
-  private authToken: string | null = null;
-  constructor(private router: Router) { }
+  private currentUserSubject: BehaviorSubject<any>;
+  public currentUser: Observable<any>;
+  private myAppUrl: string
+  private myApiUrl: string
 
-  // Método para verificar si el usuario está autenticado
-  isLoggedIn(): boolean {
-    const data = localStorage.getItem('token');
-    if (data) {
-      this.isAuthenticated = true;
-    }
-    return this.isAuthenticated;
+  constructor(private http: HttpClient) {
+    this.currentUserSubject = new BehaviorSubject<any>(this.getUserFromToken());
+    this.currentUser = this.currentUserSubject.asObservable();
+    this.myAppUrl = 'http://localhost:3001';
+    this.myApiUrl = '/usuarios/'
   }
 
-  // Método para realizar el login y almacenar el token
-  login(token: string): void {
-    // Almacena el token en el localStorage o en una cookie
-    localStorage.setItem('authToken', token);
-
-    // Actualiza el estado de autenticación a verdadero
-    this.isAuthenticated = true;
+  public get currentUserValue(): any {
+    return this.currentUserSubject.value;
   }
 
-  logout(): void {
-    // Limpiar el token del localStorage u otra forma de almacenamiento
+  login(correo: any, contraseña: any) {
+    return this.http.post<any>(`${this.myAppUrl}${this.myApiUrl}login`, {correo, contraseña})
+      .pipe(map(response => {
+        if (response) {
+          localStorage.setItem('token', response.token);
+          this.currentUserSubject.next(this.getUserFromToken());
+        }
+        return response;
+      }));
+  }
+
+  logout() {
     localStorage.removeItem('token');
-
-    // Actualizar el estado de autenticación a falso
-    this.isAuthenticated = false;
-
-    // Redirigir al usuario a la página de inicio de sesión u otra página después del logout
-    this.router.navigate(['/inicio']);
+    this.currentUserSubject.next(null);
   }
 
+  private getUserFromToken(): any {
+    const token = localStorage.getItem('token');
+    if (token) {
+      return jwtDecode(token);
+    }
+    return null;
+  }
 
+  isLoggedIn(): boolean {
+    return !!this.currentUserValue;
+  }
 }

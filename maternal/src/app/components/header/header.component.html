@@ -16,18 +16,13 @@
 
         <div class="collapse navbar-collapse justify-content-end col-4" id="navbarNav">
           <ng-container *ngIf="userLoginOn; else showLoginButtons">
-            <div class="nav-item me-4">
-              <button
-                class="btn me-2 text-white border bttn-cuenta"
-                type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown">
+              <button class="btn btn-primary text-white dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                 Cuenta
               </button>
-              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"
-                style="width: 200px; margin-right: 10px;">
-                <a class="dropdown-item text-dark border border-light" [routerLink]="['/perfil']">Perfil</a>
-                <button class="dropdown-item text-dark border-light border-dark" (click)="logout()">Cerrar
-                  Sesión</button>
-              </div>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+              </ul>
             </div>
           </ng-container>
         </div>

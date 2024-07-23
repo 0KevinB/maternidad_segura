@@ -8,6 +8,7 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { FormularioDatosComponent } from '../formulario-datos/formulario-datos.component';
 import { UserService } from '../../services/user.service';
 import { User } from '../../interfaces/user';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +29,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private _userService: UserService,
+    private _authService: AuthService ,
     private formBuilder: FormBuilder,
     private router: Router,
     private notificationService: NotificationService
@@ -62,10 +64,10 @@ export class LoginComponent implements OnInit {
       }
 
       this.loading = true;
-      this._userService.login(user).subscribe({
+      this._authService.login(user.correo, user.contraseña).subscribe({
         next: (data: any) => {
           this.router.navigate(['/inicio'])
-          localStorage.setItem('token', data)
+          localStorage.setItem('token', data.token)
         }, error: (error) => {
           this.notificationService.notify('Credenciales incorrectas. Por favor, intenta de nuevo.', 2000);
         },

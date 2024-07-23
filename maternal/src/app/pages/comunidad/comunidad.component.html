@@ -19,7 +19,8 @@
     <ng-container *ngIf="categoriaSeleccionada && !publicacionSeleccionada">
         <h2 class="mb-4">2. PUBLICACIONES</h2>
         <button class="btn btn-secondary mb-3" (click)="volverACategorias()">Volver a categorías</button>
-        
+        <ng-container *ngIf="usuarioActual; else loginPrompt">
+
         <!-- Formulario para nueva publicación -->
         <form (ngSubmit)="crearPublicacion()" class="mb-4">
             <div class="form-group">
@@ -30,7 +31,11 @@
             </div>
             <button type="submit" class="btn btn-primary">Crear Publicación</button>
         </form>
-
+    </ng-container>
+    <ng-template #loginPrompt>
+        <p>Por favor, <a [routerLink]="['/login']">inicia sesión</a> para crear una publicación.</p>
+      </ng-template>
+      
         <div *ngFor="let publicacion of publicaciones" 
              class="category-item d-flex justify-content-between align-items-center"
              (click)="cargarComentarios(publicacion.id)">

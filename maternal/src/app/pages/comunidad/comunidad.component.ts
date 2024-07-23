@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ComunidadService } from './../../services/comunidad.service';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-comunidad',
@@ -22,11 +23,15 @@ export class ComunidadComponent implements OnInit {
   publicacionSeleccionada: any | null = null;
   nuevaPublicacion: any = {};
   nuevoComentario: string = '';
+  usuarioActual: any;
 
-  constructor(private comunidadService: ComunidadService) {}
+  constructor(private comunidadService: ComunidadService, private _authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.cargarCategorias();
+    this._authService.currentUser.subscribe(usuario => {
+      this.usuarioActual = usuario;
+    });
   }
 
   cargarCategorias() {
@@ -63,12 +68,16 @@ export class ComunidadComponent implements OnInit {
   }
 
   crearPublicacion() {
+    if (!this._authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      return;
+    }
     if (!this.nuevaPublicacion.titulo || !this.nuevaPublicacion.contenido) {
       alert('Por favor, completa todos los campos');
       return;
     }
     this.nuevaPublicacion.categoria_id = this.categoriaSeleccionada;
-    this.nuevaPublicacion.usuario_id = 1; // Asume que tienes un usuario logueado, ajusta según tu lógica de autenticación
+    this.nuevaPublicacion.usuario_id = this.usuarioActual.id; // Asume que tienes un usuario logueado, ajusta según tu lógica de autenticación
 
     this.comunidadService.crearPublicacion(this.nuevaPublicacion).subscribe(
       (response) => {
@@ -81,12 +90,16 @@ export class ComunidadComponent implements OnInit {
   }
 
   crearComentario() {
+    if (!this._authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      return;
+    }
     if (!this.nuevoComentario) {
       alert('Por favor, escribe un comentario');
       return;
     }
     const comentario = {
-      usuario_id: 1, // Asume que tienes un usuario logueado, ajusta según tu lógica de autenticación
+      usuario_id: this.usuarioActual.id,   // Asume que tienes un usuario logueado, ajusta según tu lógica de autenticación
       publicacion_id: this.publicacionSeleccionada.id,
       contenido: this.nuevoComentario
     };
