@@ -1,355 +1,153 @@
 <app-header></app-header>
 
-<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-    <!-- Datos Médicos -->
-    <section class="container mt-4">
-        <h2>Datos Médicos</h2>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="inputAltura">Altura (cm)</label>
-                <input type="number" class="form-control" id="inputAltura" formControlName="altura"
-                    placeholder="Altura">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputPeso">Peso (kg)</label>
-                <input type="number" class="form-control" id="inputPeso" formControlName="peso" placeholder="Peso">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label>¿Sufre de hipertensión?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="hipertensionSi" formControlName="hipertension"
-                        value=1>
-                    <label class="form-check-label" for="hipertensionSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="hipertensionNo" formControlName="hipertension"
-                        value=0>
-                    <label class="form-check-label" for="hipertensionNo">No</label>
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="medical-form">
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Datos Médicos</h2>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Medidas Corporales</h5>
+                        <div class="form-group">
+                            <label for="inputAltura">
+                                <i class="fas fa-ruler-vertical"></i> Altura (cm)
+                            </label>
+                            <input type="number" class="form-control" id="inputAltura" formControlName="altura" placeholder="Altura">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPeso">
+                                <i class="fas fa-weight"></i> Peso (kg)
+                            </label>
+                            <input type="number" class="form-control" id="inputPeso" formControlName="peso" placeholder="Peso">
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="form-group col-md-6">
-                <label>¿Sufre de hipotiroidismo?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="hipotiroidismoSi" formControlName="hipotiroidismo"
-                        value=1>
-                    <label class="form-check-label" for="hipotiroidismoSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="hipotiroidismoNo" formControlName="hipotiroidismo"
-                        value=0>
-                    <label class="form-check-label" for="hipotiroidismoNo">No</label>
-                </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label>¿Sufre de hipertiroidismo?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="hipertiroidismoSi"
-                        formControlName="hipertiroidismo" value=1>
-                    <label class="form-check-label" for="hipertiroidismoSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="hipertiroidismoNo"
-                        formControlName="hipertiroidismo" value=0>
-                    <label class="form-check-label" for="hipertiroidismoNo">No</label>
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <label>¿Sufre de asma?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="asmaSi" formControlName="asma" value=1>
-                    <label class="form-check-label" for="asmaSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="asmaNo" formControlName="asma" value=0>
-                    <label class="form-check-label" for="asmaNo">No</label>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Condiciones Endocrinas</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="hipertensionCheck" formControlName="hipertension">
+                            <label class="form-check-label" for="hipertensionCheck">
+                                <i class="fas fa-heartbeat"></i> Hipertensión
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="hipotiroidismoCheck" formControlName="hipotiroidismo">
+                            <label class="form-check-label" for="hipotiroidismoCheck">
+                                <i class="fas fa-thermometer-quarter"></i> Hipotiroidismo
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="hipertiroidismoCheck" formControlName="hipertiroidismo">
+                            <label class="form-check-label" for="hipertiroidismoCheck">
+                                <i class="fas fa-thermometer-three-quarters"></i> Hipertiroidismo
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="diabetesCheck" formControlName="diabetes">
+                            <label class="form-check-label" for="diabetesCheck">
+                                <i class="fas fa-tint"></i> Diabetes
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label>¿Sufre de cáncer?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="cancerSi" formControlName="cancer" value=1>
-                    <label class="form-check-label" for="cancerSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="cancerNo" formControlName="cancer" value=0>
-                    <label class="form-check-label" for="cancerNo">No</label>
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <label>¿Sufre de alguna ETS?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="etsSi" formControlName="ets" value=1>
-                    <label class="form-check-label" for="etsSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="etsNo" formControlName="ets" value=0>
-                    <label class="form-check-label" for="etsNo">No</label>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Condiciones Respiratorias y Cardíacas</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="asmaCheck" formControlName="asma">
+                            <label class="form-check-label" for="asmaCheck">
+                                <i class="fas fa-lungs"></i> Asma
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="otraEnfermedadCardiacaCheck" formControlName="otraEnfermedadCardiaca">
+                            <label class="form-check-label" for="otraEnfermedadCardiacaCheck">
+                                <i class="fas fa-heart"></i> Otra enfermedad cardíaca
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label>¿Sufre de ansiedad?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="ansiedadSi" formControlName="ansiedad" value=1>
-                    <label class="form-check-label" for="ansiedadSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="ansiedadNo" formControlName="ansiedad" value=0>
-                    <label class="form-check-label" for="ansiedadNo">No</label>
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <label>¿Sufre de depresión?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="depresionSi" formControlName="depresion"
-                        value=1>
-                    <label class="form-check-label" for="depresionSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="depresionNo" formControlName="depresion"
-                        value=0>
-                    <label class="form-check-label" for="depresionNo">No</label>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Condiciones Renales y Otras</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="otraEnfermedadRenalCheck" formControlName="otraEnfermedadRenal">
+                            <label class="form-check-label" for="otraEnfermedadRenalCheck">
+                                <i class="fas fa-kidney"></i> Otra enfermedad renal
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="cancerCheck" formControlName="cancer">
+                            <label class="form-check-label" for="cancerCheck">
+                                <i class="fas fa-ribbon"></i> Cáncer
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="etsCheck" formControlName="ets">
+                            <label class="form-check-label" for="etsCheck">
+                                <i class="fas fa-virus"></i> ETS
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label>¿Sufre de diabetes?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="diabetesSi" formControlName="diabetes" value=1>
-                    <label class="form-check-label" for="diabetesSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="diabetesNo" formControlName="diabetes" value=0>
-                    <label class="form-check-label" for="diabetesNo">No</label>
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <label>¿Sufre de otra enfermedad renal?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="enfermedadRenalSi"
-                        formControlName="enfermedadRenal" value=1>
-                    <label class="form-check-label" for="enfermedadRenalSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="enfermedadRenalNo"
-                        formControlName="enfermedadRenal" value=0>
-                    <label class="form-check-label" for="enfermedadRenalNo">No</label>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Salud Mental</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="ansiedadCheck" formControlName="ansiedad">
+                            <label class="form-check-label" for="ansiedadCheck">
+                                <i class="fas fa-brain"></i> Ansiedad
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="depresionCheck" formControlName="depresion">
+                            <label class="form-check-label" for="depresionCheck">
+                                <i class="fas fa-frown"></i> Depresión
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label>¿Sufre de otra enfermedad cardiaca?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="enfermedadCardiacaSi"
-                        formControlName="enfermedadCardiaca" value=1>
-                    <label class="form-check-label" for="enfermedadCardiacaSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="enfermedadCardiacaNo"
-                        formControlName="enfermedadCardiaca" value=0>
-                    <label class="form-check-label" for="enfermedadCardiacaNo">No</label>
-                </div>
-            </div>
-            <label>¿Toma alguna medicación?</label>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="medicacionSi" formControlName="medicacion" value=1>
-                <label class="form-check-label" for="medicacionSi">Sí</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="medicacionNo" formControlName="medicacion" value=0>
-                <label class="form-check-label" for="medicacionNo">No</label>
-            </div>
-        </div>
-    </section>
-
-    <!-- Antecedentes Obstétricos -->
-    <section class="container mt-4">
-        <h2>Antecedentes Obstétricos</h2>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label>¿Ha tenido embarazos previos?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="embarazosPreviosSi"
-                        formControlName="embarazosPrevios" value=1>
-                    <label class="form-check-label" for="embarazosPreviosSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="embarazosPreviosNo"
-                        formControlName="embarazosPrevios" value=0>
-                    <label class="form-check-label" for="embarazosPreviosNo">No</label>
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <label>¿Sufrió o sufre de preeclampsia?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="preeclampsiaSi" formControlName="preeclampsia"
-                        value=1>
-                    <label class="form-check-label" for="preeclampsiaSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="preeclampsiaNo" formControlName="preeclampsia"
-                        value=0>
-                    <label class="form-check-label" for="preeclampsiaNo">No</label>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Historial Obstétrico</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="cesareaCheck" formControlName="cesarea">
+                            <label class="form-check-label" for="cesareaCheck">
+                                <i class="fas fa-baby"></i> Cesárea previa
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label>¿Tuvo un parto prematuro anteriormente?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="partoPrematuroSi" formControlName="partoPrematuro"
-                        value=1>
-                    <label class="form-check-label" for="partoPrematuroSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="partoPrematuroNo" formControlName="partoPrematuro"
-                        value=0>
-                    <label class="form-check-label" for="partoPrematuroNo">No</label>
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <label>¿Hemorragias postparto o durante el embarazo?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="hemorragiasSi" formControlName="hemorragias"
-                        value=1>
-                    <label class="form-check-label" for="hemorragiasSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="hemorragiasNo" formControlName="hemorragias"
-                        value=0>
-                    <label class="form-check-label" for="hemorragiasNo">No</label>
-                </div>
-            </div>
+        
+        <div class="d-grid gap-2 col-md-6 mx-auto mt-4">
+            <button class="btn btn-primary btn-lg" [disabled]="myForm.invalid" type="submit">
+                <i class="fas fa-save"></i> Guardar Datos Médicos
+            </button>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label>¿Más de una pérdida en el primer trimestre?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="perdidaPrimerTrimestreSi"
-                        formControlName="perdidaPrimerTrimestre" value=1>
-                    <label class="form-check-label" for="perdidaPrimerTrimestreSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="perdidaPrimerTrimestreNo"
-                        formControlName="perdidaPrimerTrimestre" value=0>
-                    <label class="form-check-label" for="perdidaPrimerTrimestreNo">No</label>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Datos del Embarazo Actual -->
-    <section class="container mt-4">
-        <h2>Datos del Embarazo Actual</h2>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label>¿Bajo líquido amniótico?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="bajoLiquidoAmnioticoSi"
-                        formControlName="bajoLiquidoAmniotico" value=1>
-                    <label class="form-check-label" for="bajoLiquidoAmnioticoSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="bajoLiquidoAmnioticoNo"
-                        formControlName="bajoLiquidoAmniotico" value=0>
-                    <label class="form-check-label" for="bajoLiquidoAmnioticoNo">No</label>
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <label>¿Exceso de líquido amniótico?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="excesoLiquidoAmnioticoSi"
-                        formControlName="excesoLiquidoAmniotico" value=1>
-                    <label class="form-check-label" for="excesoLiquidoAmnioticoSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="excesoLiquidoAmnioticoNo"
-                        formControlName="excesoLiquidoAmniotico" value=0>
-                    <label class="form-check-label" for="excesoLiquidoAmnioticoNo">No</label>
-                </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label>¿Anomalía fetal?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="anomalíaFetalSi" formControlName="anomaliaFetal"
-                        value=1>
-                    <label class="form-check-label" for="anomalíaFetalSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="anomalíaFetalNo" formControlName="anomaliaFetal"
-                        value=0>
-                    <label class="form-check-label" for="anomalíaFetalNo">No</label>
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <label>¿Crecimiento fetal disminuido?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="crecimientoFetalDisminuidoSi"
-                        formControlName="crecimientoFetalDisminuido" value=1>
-                    <label class="form-check-label" for="crecimientoFetalDisminuidoSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="crecimientoFetalDisminuidoNo"
-                        formControlName="crecimientoFetalDisminuido" value=0>
-                    <label class="form-check-label" for="crecimientoFetalDisminuidoNo">No</label>
-                </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label>¿Fecundación in vitro?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="fecundacionInVitroSi"
-                        formControlName="fecundacionInVitro" value=1>
-                    <label class="form-check-label" for="fecundacionInVitroSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="fecundacionInVitroNo"
-                        formControlName="fecundacionInVitro" value=0>
-                    <label class="form-check-label" for="fecundacionInVitroNo">No</label>
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <label>¿Gestación múltiple?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="gestacionMultipleSi"
-                        formControlName="gestacionMultiple" value=1>
-                    <label class="form-check-label" for="gestacionMultipleSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="gestacionMultipleNo"
-                        formControlName="gestacionMultiple" value=0>
-                    <label class="form-check-label" for="gestacionMultipleNo">No</label>
-                </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label>¿Enfermedad o infección durante el embarazo?</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="infeccionEmbarazoSi"
-                        formControlName="infeccionEmbarazo" value=1>
-                    <label class="form-check-label" for="infeccionEmbarazoSi">Sí</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="infeccionEmbarazoNo"
-                        formControlName="infeccionEmbarazo" value=0>
-                    <label class="form-check-label" for="infeccionEmbarazoNo">No</label>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
 </form>
+
+<app-footer></app-footer>
