@@ -532,7 +532,7 @@ function obtenerRecomendacionesLocales(datosUsuario) {
         datosMedicos.diabetes ? "- Controle sus niveles de azúcar en sangre regularmente y siga una dieta específica para diabetes gestacional." : "",
         datosMedicos.hipertiroidismo || datosMedicos.hipotiroidismo ? "- Realice controles de función tiroidea según las indicaciones de su endocrinólogo." : "",
         datosMedicos.asma ? "- Mantenga su plan de manejo del asma y consulte con su médico sobre ajustes necesarios durante el embarazo." : "",
-        datosMedicos.ets ? "- Siga el tratamiento indicado para enfermedades de transmisión sexual y realice controles adicionales para proteger al feto." : "",
+        datosMedicos.ETS ? "- Siga el tratamiento indicado para enfermedades de transmisión sexual y realice controles adicionales para proteger al feto." : "",
         datosMedicos.enfermedad_cardiaca ? "- Consulte con un cardiólogo para un seguimiento especializado durante el embarazo." : "",
         datosMedicos.enfermedad_renal ? "- Realice controles renales frecuentes y siga una dieta baja en sodio si es necesario." : "",
         antecedentesObstetricos.preeclampsia ? "- Esté atenta a los signos de preeclampsia como hinchazón, dolor de cabeza intenso o cambios en la visión." : "",
@@ -641,7 +641,7 @@ function calcularPorcentajeDatosMedicos(datosMedicos) {
         puntosRestados += 5;
     if (datosMedicos.cancer)
         puntosRestados += 20;
-    if (datosMedicos.ets)
+    if (datosMedicos.ETS)
         puntosRestados += 15;
     if (datosMedicos.ansiedad || datosMedicos.depresion)
         puntosRestados += 8;

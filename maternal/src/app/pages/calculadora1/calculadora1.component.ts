@@ -24,25 +24,13 @@ export class Calculadora1Component {
     hipertiroidismo: [''],
     asma: [''],
     cancer: [''],
-    ets: [''],
+    ETS: [''],
     ansiedad: [''],
     depresion: [''],
     diabetes: [''],
-    enfermedadRenal: [''],
-    enfermedadCardiaca: [''],
+    enfermedad_renal: [''],
+    enfermedad_cardiaca: [''],
     medicacion: [''],
-    embarazosPrevios: [''],
-    preeclampsia: [''],
-    partoPrematuro: [''],
-    hemorragias: [''],
-    perdidaPrimerTrimestre: [''],
-    bajoLiquidoAmniotico: [''],
-    excesoLiquidoAmniotico: [''],
-    anomaliaFetal: [''],
-    crecimientoFetalDisminuido: [''],
-    fecundacionInVitro: [''],
-    gestacionMultiple: [''],
-    infeccionEmbarazo: ['']
   });
 
   constructor(

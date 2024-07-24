@@ -670,7 +670,7 @@ async function obtenerRecomendacionesIA(prompt: string, datosUsuario: any): Prom
       datosMedicos.diabetes ? "- Controle sus niveles de azúcar en sangre regularmente y siga una dieta específica para diabetes gestacional." : "",
       datosMedicos.hipertiroidismo || datosMedicos.hipotiroidismo ? "- Realice controles de función tiroidea según las indicaciones de su endocrinólogo." : "",
       datosMedicos.asma ? "- Mantenga su plan de manejo del asma y consulte con su médico sobre ajustes necesarios durante el embarazo." : "",
-      datosMedicos.ets ? "- Siga el tratamiento indicado para enfermedades de transmisión sexual y realice controles adicionales para proteger al feto." : "",
+      datosMedicos.ETS ? "- Siga el tratamiento indicado para enfermedades de transmisión sexual y realice controles adicionales para proteger al feto." : "",
       datosMedicos.enfermedad_cardiaca ? "- Consulte con un cardiólogo para un seguimiento especializado durante el embarazo." : "",
       datosMedicos.enfermedad_renal ? "- Realice controles renales frecuentes y siga una dieta baja en sodio si es necesario." : "",
       antecedentesObstetricos.preeclampsia ? "- Esté atenta a los signos de preeclampsia como hinchazón, dolor de cabeza intenso o cambios en la visión." : "",
@@ -782,7 +782,7 @@ async function obtenerRecomendacionesIA(prompt: string, datosUsuario: any): Prom
     };
   }
   
-  function calcularPorcentajeDatosMedicos(datosMedicos: { hipertension: any; diabetes: any; hipertiroidismo: any; hipotiroidismo: any; asma: any; cancer: any; ets: any; ansiedad: any; depresion: any; enfermedad_cardiaca: any; enfermedad_renal: any; }) {
+  function calcularPorcentajeDatosMedicos(datosMedicos: { hipertension: any; diabetes: any; hipertiroidismo: any; hipotiroidismo: any; asma: any; cancer: any; ETS: any; ansiedad: any; depresion: any; enfermedad_cardiaca: any; enfermedad_renal: any; }) {
     let puntosTotales = 100;
     let puntosRestados = 0;
   
@@ -791,7 +791,7 @@ async function obtenerRecomendacionesIA(prompt: string, datosUsuario: any): Prom
     if (datosMedicos.hipertiroidismo || datosMedicos.hipotiroidismo) puntosRestados += 8;
     if (datosMedicos.asma) puntosRestados += 5;
     if (datosMedicos.cancer) puntosRestados += 20;
-    if (datosMedicos.ets) puntosRestados += 15;
+    if (datosMedicos.ETS) puntosRestados += 15;
     if (datosMedicos.ansiedad || datosMedicos.depresion) puntosRestados += 8;
     if (datosMedicos.enfermedad_cardiaca) puntosRestados += 15;
     if (datosMedicos.enfermedad_renal) puntosRestados += 12;
