@@ -497,11 +497,14 @@ export const ObtenerDatosUsuario = async (req: Request, res: Response) => {
     // Obtener recomendaciones locales
     // const recomendaciones = await obtenerRecomendacionesIA(promptParaIA, datosUsuario);
     const recomendaciones = await obtenerRecomendacionesLocales(datosUsuario);
+    const prompt = await crearPromptSimplificado(datosUsuario)
+    const recomendacionesIA = await obtenerRecomendacionesIA(prompt, datosUsuario);
     const resultados = await calcularPorcentajesSeguridad(datosUsuario)
     // Incluir el prompt y las recomendaciones en la respuesta
     res.status(200).json({
       datosUsuario,
       recomendaciones,
+      recomendacionesIA,
       resultados
     });
   } catch (error) {
@@ -509,7 +512,7 @@ export const ObtenerDatosUsuario = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error al obtener los datos y recomendaciones' });
   }
 };
-/* function crearPromptParaIA(datosUsuario: any): string {
+function crearPromptParaIA(datosUsuario: any): string {
   const {
     usuario,
     datosMedicos,
@@ -615,8 +618,8 @@ Proporciona recomendaciones breves y específicas para:
 4. Hábitos saludables
 5. Cuidados especiales
 6. Salud mental`;
-} */
-/* function calcularEdad(fechaNacimiento: string): number {
+} 
+function calcularEdad(fechaNacimiento: string): number {
   const hoy = new Date();
   const nacimiento = new Date(fechaNacimiento);
   let edad = hoy.getFullYear() - nacimiento.getFullYear();
@@ -633,10 +636,7 @@ async function obtenerRecomendacionesIA(prompt: string, datosUsuario: any): Prom
       model: 'EleutherAI/gpt-neo-2.7B',
       inputs: prompt,
       parameters: {
-        max_new_tokens: 250,
-        temperature: 0.7,
-        top_p: 0.95,
-        repetition_penalty: 1.2,
+        max_new_tokens: 1000,
       },
     });
 
@@ -652,7 +652,7 @@ async function obtenerRecomendacionesIA(prompt: string, datosUsuario: any): Prom
     console.log('Utilizando sistema de recomendaciones local');
     return obtenerRecomendacionesLocales(datosUsuario);
   }
-} */
+} 
   function obtenerRecomendacionesLocales(datosUsuario: { usuario?: any; datosMedicos: any; antecedentesObstetricos: any; embarazoActual: any; habitos: any; nutricion: any; actividadFisica: any; }) {
     const {
       datosMedicos,

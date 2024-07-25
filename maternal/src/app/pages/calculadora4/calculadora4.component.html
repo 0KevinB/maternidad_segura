@@ -1,0 +1,113 @@
+<app-header></app-header>
+
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="habits-form">
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Hábitos y Consumo de Sustancias</h2>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Consumo de Alcohol</h5>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="bebidasAlcoholicasCheck" formControlName="bebidas_alcoholicas">
+                            <label class="form-check-label" for="bebidasAlcoholicasCheck">
+                                <i class="fas fa-wine-glass-alt"></i> Consume bebidas alcohólicas
+                            </label>
+                        </div>
+                        <div class="form-group" *ngIf="myForm.get('bebidas_alcoholicas')?.value">
+                            <label for="tipoAlcohol">Tipo de alcohol</label>
+                            <input type="text" class="form-control" id="tipoAlcohol" formControlName="tipo_alcohol" placeholder="Ej: Cerveza, Vino, etc.">
+                        </div>
+                        <div class="form-group" *ngIf="myForm.get('bebidas_alcoholicas')?.value">
+                            <label for="frecuenciaAlcohol">Frecuencia de consumo</label>
+                            <select class="form-control" id="frecuenciaAlcohol" formControlName="frecuencia_alcohol">
+                                <option value="">Seleccione frecuencia</option>
+                                <option value="diario">Diario</option>
+                                <option value="semanal">Semanal</option>
+                                <option value="mensual">Mensual</option>
+                                <option value="ocasional">Ocasional</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Consumo de Drogas</h5>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="drogasCheck" formControlName="drogas">
+                            <label class="form-check-label" for="drogasCheck">
+                                <i class="fas fa-pills"></i> Consume drogas
+                            </label>
+                        </div>
+                        <div class="form-group" *ngIf="myForm.get('drogas')?.value">
+                            <label for="tipoDroga">Tipo de droga</label>
+                            <input type="text" class="form-control" id="tipoDroga" formControlName="tipo_droga" placeholder="Especifique el tipo">
+                        </div>
+                        <div class="form-group" *ngIf="myForm.get('drogas')?.value">
+                            <label for="frecuenciaDroga">Frecuencia de consumo</label>
+                            <select class="form-control" id="frecuenciaDroga" formControlName="frecuencia_droga">
+                                <option value="">Seleccione frecuencia</option>
+                                <option value="diario">Diario</option>
+                                <option value="semanal">Semanal</option>
+                                <option value="mensual">Mensual</option>
+                                <option value="ocasional">Ocasional</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Consumo de Tabaco</h5>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="tabacoCheck" formControlName="tabaco">
+                            <label class="form-check-label" for="tabacoCheck">
+                                <i class="fas fa-smoking"></i> Consume tabaco
+                            </label>
+                        </div>
+                        <div class="form-group" *ngIf="myForm.get('tabaco')?.value">
+                            <label for="frecuenciaTabaco">Frecuencia de consumo</label>
+                            <select class="form-control" id="frecuenciaTabaco" formControlName="frecuencia_tabaco">
+                                <option value="">Seleccione frecuencia</option>
+                                <option value="diario">Diario</option>
+                                <option value="semanal">Semanal</option>
+                                <option value="mensual">Mensual</option>
+                                <option value="ocasional">Ocasional</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Entorno</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="hogarLibreTabacoCheck" formControlName="hogar_libre_tabaco">
+                            <label class="form-check-label" for="hogarLibreTabacoCheck">
+                                <i class="fas fa-home"></i> Hogar libre de tabaco
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="d-grid gap-2 col-md-6 mx-auto mt-4">
+            <button class="btn btn-primary btn-lg" type="submit">
+                <i class="fas fa-save"></i> Guardar Información de Hábitos
+            </button>
+        </div>
+    </div>
+</form>
+
+<app-footer></app-footer>

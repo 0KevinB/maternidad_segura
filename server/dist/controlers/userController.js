@@ -365,11 +365,14 @@ const ObtenerDatosUsuario = (req, res) => __awaiter(void 0, void 0, void 0, func
         // Obtener recomendaciones locales
         // const recomendaciones = await obtenerRecomendacionesIA(promptParaIA, datosUsuario);
         const recomendaciones = yield obtenerRecomendacionesLocales(datosUsuario);
+        const prompt = yield crearPromptSimplificado(datosUsuario);
+        const recomendacionesIA = yield obtenerRecomendacionesIA(prompt, datosUsuario);
         const resultados = yield calcularPorcentajesSeguridad(datosUsuario);
         // Incluir el prompt y las recomendaciones en la respuesta
         res.status(200).json({
             datosUsuario,
             recomendaciones,
+            recomendacionesIA,
             resultados
         });
     }
@@ -379,23 +382,13 @@ const ObtenerDatosUsuario = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.ObtenerDatosUsuario = ObtenerDatosUsuario;
-/* function crearPromptParaIA(datosUsuario: any): string {
-  const {
-    usuario,
-    datosMedicos,
-    antecedentesObstetricos,
-    embarazoActual,
-    habitos,
-    nutricion,
-    actividadFisica
-  } = datosUsuario;
-
-  // Calcular la edad
-  const fechaNacimiento = new Date(usuario.fecha_nacimiento);
-  const hoy = new Date();
-  const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
-
-  const prompt = `
+function crearPromptParaIA(datosUsuario) {
+    const { usuario, datosMedicos, antecedentesObstetricos, embarazoActual, habitos, nutricion, actividadFisica } = datosUsuario;
+    // Calcular la edad
+    const fechaNacimiento = new Date(usuario.fecha_nacimiento);
+    const hoy = new Date();
+    const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+    const prompt = `
 Eres un asistente de salud especializado en embarazos. Basándote en la siguiente información de una paciente embarazada, proporciona recomendaciones personalizadas para un embarazo saludable:
 
 Datos personales:
@@ -458,21 +451,11 @@ Basándote en esta información, proporciona recomendaciones personalizadas en l
 
 Por favor, proporciona recomendaciones detalladas y específicas para cada área, considerando todos los factores mencionados en el perfil de la paciente.
 `;
-
-  return prompt;
+    return prompt;
 }
-function crearPromptSimplificado(datosUsuario: any): string {
-  const {
-    usuario,
-    datosMedicos,
-    antecedentesObstetricos,
-    embarazoActual,
-    habitos,
-    nutricion,
-    actividadFisica
-  } = datosUsuario;
-
-  return `Genera recomendaciones para una embarazada de ${calcularEdad(usuario.fecha_nacimiento)} años, en la semana ${embarazoActual.semanas_embarazo} de embarazo.
+function crearPromptSimplificado(datosUsuario) {
+    const { usuario, datosMedicos, antecedentesObstetricos, embarazoActual, habitos, nutricion, actividadFisica } = datosUsuario;
+    return `Genera recomendaciones para una embarazada de ${calcularEdad(usuario.fecha_nacimiento)} años, en la semana ${embarazoActual.semanas_embarazo} de embarazo.
 Condiciones médicas: ${datosMedicos.hipertension ? 'hipertensión, ' : ''}${datosMedicos.ansiedad ? 'ansiedad, ' : ''}
 Antecedentes: ${antecedentesObstetricos.parto_prematuro ? 'parto prematuro previo, ' : ''}${antecedentesObstetricos.perdida ? 'pérdida previa, ' : ''}
 Hábitos: ${habitos.bebidas_alcoholicas ? 'consume alcohol semanalmente, ' : ''}${habitos.tabaco ? 'fuma diariamente, ' : ''}
@@ -485,44 +468,42 @@ Proporciona recomendaciones breves y específicas para:
 4. Hábitos saludables
 5. Cuidados especiales
 6. Salud mental`;
-} */
-/* function calcularEdad(fechaNacimiento: string): number {
-  const hoy = new Date();
-  const nacimiento = new Date(fechaNacimiento);
-  let edad = hoy.getFullYear() - nacimiento.getFullYear();
-  const mes = hoy.getMonth() - nacimiento.getMonth();
-  if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-    edad--;
-  }
-  return edad;
 }
-async function obtenerRecomendacionesIA(prompt: string, datosUsuario: any): Promise<string> {
-  try {
-    // Intenta obtener recomendaciones de la IA
-    const response = await hf.textGeneration({
-      model: 'EleutherAI/gpt-neo-2.7B',
-      inputs: prompt,
-      parameters: {
-        max_new_tokens: 250,
-        temperature: 0.7,
-        top_p: 0.95,
-        repetition_penalty: 1.2,
-      },
-    });
-
-    // Verifica si la respuesta de la IA es útil
-    if (response.generated_text.trim() === prompt.trim() || response.generated_text.includes("coconuts")) {
-      console.log('La IA no generó recomendaciones útiles. Usando sistema local.');
-      return obtenerRecomendacionesLocales(datosUsuario);
+function calcularEdad(fechaNacimiento) {
+    const hoy = new Date();
+    const nacimiento = new Date(fechaNacimiento);
+    let edad = hoy.getFullYear() - nacimiento.getFullYear();
+    const mes = hoy.getMonth() - nacimiento.getMonth();
+    if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+        edad--;
     }
-
-    return response.generated_text;
-  } catch (error) {
-    console.error('Error al obtener recomendaciones de la IA:', error);
-    console.log('Utilizando sistema de recomendaciones local');
-    return obtenerRecomendacionesLocales(datosUsuario);
-  }
-} */
+    return edad;
+}
+function obtenerRecomendacionesIA(prompt, datosUsuario) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            // Intenta obtener recomendaciones de la IA
+            const response = yield hf.textGeneration({
+                model: 'EleutherAI/gpt-neo-2.7B',
+                inputs: prompt,
+                parameters: {
+                    max_new_tokens: 1000,
+                },
+            });
+            // Verifica si la respuesta de la IA es útil
+            if (response.generated_text.trim() === prompt.trim() || response.generated_text.includes("coconuts")) {
+                console.log('La IA no generó recomendaciones útiles. Usando sistema local.');
+                return obtenerRecomendacionesLocales(datosUsuario);
+            }
+            return response.generated_text;
+        }
+        catch (error) {
+            console.error('Error al obtener recomendaciones de la IA:', error);
+            console.log('Utilizando sistema de recomendaciones local');
+            return obtenerRecomendacionesLocales(datosUsuario);
+        }
+    });
+}
 function obtenerRecomendacionesLocales(datosUsuario) {
     const { datosMedicos, antecedentesObstetricos, embarazoActual, habitos, nutricion, actividadFisica } = datosUsuario;
     const recomendaciones = [

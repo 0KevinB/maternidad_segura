@@ -1,0 +1,82 @@
+<app-header></app-header>
+
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="diet-form">
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Hábitos Alimenticios</h2>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Tipo de Dieta</h5>
+                        <div class="form-group">
+                            <label for="dieta">Seleccione su tipo de dieta:</label>
+                            <select class="form-control" id="dieta" formControlName="dieta">
+                                <option value="">Seleccione una opción</option>
+                                <option value="omnivora">Omnívora</option>
+                                <option value="vegetariana">Vegetariana</option>
+                                <option value="vegana">Vegana</option>
+                                <option value="pescetariana">Pescetariana</option>
+                                <option value="otra">Otra</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Consumo de Alimentos</h5>
+                        <div class="form-group">
+                            <label>Frecuencia de consumo semanal:</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control mb-2" formControlName="frutas" placeholder="Frutas">
+                                    <input type="number" class="form-control mb-2" formControlName="verduras" placeholder="Verduras">
+                                    <input type="number" class="form-control mb-2" formControlName="carnes" placeholder="Carnes">
+                                    <input type="number" class="form-control mb-2" formControlName="comida_rapida" placeholder="Comida Rápida">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control mb-2" formControlName="legumbres" placeholder="Legumbres">
+                                    <input type="number" class="form-control mb-2" formControlName="mariscos" placeholder="Mariscos">
+                                    <input type="number" class="form-control mb-2" formControlName="lacteos" placeholder="Lácteos">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Hábitos de Alimentación</h5>
+                        <div class="form-group">
+                            <label for="numeroComidas">Número de comidas al día:</label>
+                            <input type="number" class="form-control" id="numeroComidas" formControlName="numero_comidas">
+                        </div>
+                        <div class="form-group">
+                            <label for="numeroVasos">Número de vasos de agua al día:</label>
+                            <input type="number" class="form-control" id="numeroVasos" formControlName="numero_vasos">
+                        </div>
+                        <div class="form-group">
+                            <label for="comidasFuera">Comidas fuera de casa por semana:</label>
+                            <input type="number" class="form-control" id="comidasFuera" formControlName="comidas_fuera_casa">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="d-grid gap-2 col-md-6 mx-auto mt-4">
+            <button class="btn btn-primary btn-lg" type="submit" [disabled]="myForm.invalid">
+                <i class="fas fa-save"></i> Guardar Información de Dieta
+            </button>
+        </div>
+    </div>
+</form>
+
+<app-footer></app-footer>

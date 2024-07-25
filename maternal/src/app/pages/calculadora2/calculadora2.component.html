@@ -1,0 +1,73 @@
+<app-header></app-header>
+
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="medical-form">
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Historial Obstétrico</h2>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Embarazos Previos</h5>
+                        <div class="form-group">
+                            <label for="inputEmbarazos">
+                                <i class="fas fa-baby-carriage"></i> Número de embarazos previos
+                            </label>
+                            <input type="number" class="form-control" id="inputEmbarazos" formControlName="embarazos_previos" placeholder="Número de embarazos">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Complicaciones Previas</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="preeclampsiaCheck" formControlName="preeclampsia">
+                            <label class="form-check-label" for="preeclampsiaCheck">
+                                <i class="fas fa-exclamation-triangle"></i> Preeclampsia
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="partoPrematuroCheck" formControlName="parto_prematuro">
+                            <label class="form-check-label" for="partoPrematuroCheck">
+                                <i class="fas fa-clock"></i> Parto prematuro
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Complicaciones Adicionales</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="hemorragiasCheck" formControlName="hemorragias">
+                            <label class="form-check-label" for="hemorragiasCheck">
+                                <i class="fas fa-tint"></i> Hemorragias
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="perdidaCheck" formControlName="perdida">
+                            <label class="form-check-label" for="perdidaCheck">
+                                <i class="fas fa-heart-broken"></i> Pérdida gestacional
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="d-grid gap-2 col-md-6 mx-auto mt-4">
+            <button class="btn btn-primary btn-lg" [disabled]="myForm.invalid" type="submit">
+                <i class="fas fa-save"></i> Guardar Historial Obstétrico
+            </button>
+        </div>
+    </div>
+</form>
+
+<app-footer></app-footer>

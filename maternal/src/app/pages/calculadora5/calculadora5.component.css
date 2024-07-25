@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.diet-form {
+    padding: 20px;
+}
+
+.card {
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card-title {
+    color: #4a148c;
+    font-weight: bold;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    color: #121481;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: #4a148c;
+    border-color: #4a148c;
+}
+
+.btn-primary:hover {
+    background-color: #3a0e6a;
+    border-color: #3a0e6a;
+}
+
+.fas {
+    margin-right: 5px;
+}
+
+@media (max-width: 768px) {
+    .col-md-6 {
+        margin-bottom: 20px;
+    }
+}
