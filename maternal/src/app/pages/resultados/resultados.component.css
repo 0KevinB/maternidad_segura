@@ -1,0 +1,34 @@
+.card {
+    margin-bottom: 20px;
+  }
+  
+  .card-title {
+    color: #4a148c;
+    font-weight: bold;
+  }
+  
+  .btn-link {
+    color: #4a148c;
+    text-decoration: none;
+  }
+  
+  .btn-link:hover {
+    text-decoration: underline;
+  }
+  
+  .text-success {
+    color: #28a745;
+  }
+  
+  .text-warning {
+    color: #ffc107;
+  }
+  
+  .text-danger {
+    color: #dc3545;
+  }
+  
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }

@@ -1,1 +1,53 @@
-<p>resultados works!</p>
+<app-header></app-header>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Resultados del Análisis</h2>
+  
+    <div class="row">
+      <div class="col-md-4" *ngFor="let section of secciones; let i = index">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ section }}</h5>
+            <canvas [id]="'chart' + i"></canvas>
+            <p class="card-text mt-2">Nivel de seguridad: {{ resultados.porcentajesPorSeccion[section] }}%</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <h3 class="mt-4 mb-3">Recomendaciones</h3>
+  <div class="accordion" id="recommendationsAccordion">
+    <div class="card" *ngFor="let recomendacion of recomendaciones; let i = index">
+      <div class="card-header" [id]="'heading' + i">
+        <h2 class="mb-0">
+          <button class="btn btn-link" type="button" (click)="toggleCollapse(i)"
+                  [attr.aria-expanded]="i === openPanel" [attr.aria-controls]="'collapse' + i">
+            {{ recomendacion.title }}
+          </button>
+        </h2>
+      </div>
+      <div [id]="'collapse' + i" class="collapse" [ngClass]="{'show': i === openPanel}" [attr.aria-labelledby]="'heading' + i" data-parent="#recommendationsAccordion">
+        <div class="card-body">
+          {{ recomendacion.content }}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card mt-4">
+    <div class="card-header" id="iaRecommendationsHeading">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" (click)="toggleCollapseIA()"
+                [attr.aria-expanded]="openPanelIA" aria-controls="iaRecommendationsCollapse">
+          Recomendaciones IA (Prototipo)
+        </button>
+      </h2>
+    </div>
+    <div id="iaRecommendationsCollapse" class="collapse" [ngClass]="{'show': openPanelIA}" aria-labelledby="iaRecommendationsHeading" data-parent="#recommendationsAccordion">
+      <div class="card-body">
+        <p class="text-muted">Nota: Esta es una versión prototipo que utiliza un modelo de IA básico. Las recomendaciones pueden no ser precisas o relevantes en todos los casos.</p>
+        <pre>{{ recomendacionesIA }}</pre>
+      </div>
+    </div>
+  </div>
+<app-footer></app-footer>  
