@@ -47,7 +47,11 @@ export class AuthService {
     }
     return null;
   }
-
+  
+  getID(){
+    const id = this.getUserFromToken().id
+    return id
+  }
   isLoggedIn(): boolean {
     return !!this.currentUserValue;
   }

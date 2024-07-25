@@ -1,6 +1,5 @@
-<app-header></app-header>
 
-<form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="medical-form">
+<form [formGroup]="myForm" class="medical-form">
     <div class="container mt-4">
         <h2 class="text-center mb-4">Historial Obstétrico</h2>
         
@@ -61,13 +60,5 @@
                 </div>
             </div>
         </div>
-        
-        <div class="d-grid gap-2 col-md-6 mx-auto mt-4">
-            <button class="btn btn-primary btn-lg" [disabled]="myForm.invalid" type="submit">
-                <i class="fas fa-save"></i> Guardar Historial Obstétrico
-            </button>
-        </div>
     </div>
 </form>
-
-<app-footer></app-footer>

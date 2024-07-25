@@ -5,10 +5,9 @@ import { FormBuilder, Validators, ReactiveFormsModule, FormGroup, FormControl } 
 import { FooterComponent } from '../../components/footer/footer.component';
 import { NotificationService } from '../../services/notification.service';
 import { HeaderComponent } from '../../components/header/header.component';
-import { FormularioDatosComponent } from '../formulario-datos/formulario-datos.component';
-import { UserService } from '../../services/user.service';
 import { User } from '../../interfaces/user';
 import { AuthService } from '../../services/auth.service';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +15,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   imports: [RouterLink, LoginComponent,HeaderComponent
-    , FormularioDatosComponent, CommonModule,
+    , CommonModule,
     ReactiveFormsModule,FooterComponent
   ]
 })
@@ -28,7 +27,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(
-    private _userService: UserService,
+    private _userService: UsuarioService,
     private _authService: AuthService ,
     private formBuilder: FormBuilder,
     private router: Router,

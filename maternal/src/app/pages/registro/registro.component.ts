@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserService } from '../../services/user.service';
 import { Router, RouterLink } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
 import { User } from '../../interfaces/user';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { HeaderComponent } from '../../components/header/header.component';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-registro',
@@ -28,7 +28,7 @@ export class RegistroComponent {
   });
 
   constructor(
-    private _userService: UserService,
+    private _userService: UsuarioService,
     private fb: FormBuilder,
     private router: Router,
     private notificationService: NotificationService

@@ -166,7 +166,7 @@ const CrearAntecedentesObstetricos = (req, res) => __awaiter(void 0, void 0, voi
 });
 exports.CrearAntecedentesObstetricos = CrearAntecedentesObstetricos;
 const CrearEmbarazoActual = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { usuario_id, enfermedad_actual, bajo_liquido_amniotico, alto_liquido_amniotico, anomalia_fetal, crecimiento_disminuido, in_vitro, gestacion_multiple, semanas_embarazo, numero_fetos } = req.body;
+    const { usuario_id, enfermedad_actual, bajo_liquido_amniotico, alto_liquido_amniotico, anomalía_fetal, crecimiento_disminuido, in_vitro, gestacion_multiple, semanas_embarazo, numero_fetos } = req.body;
     // Validación de entrada
     if (!usuario_id || semanas_embarazo === undefined || numero_fetos === undefined) {
         return res.status(400).json({ message: 'Usuario ID, semanas de embarazo y número de fetos son campos obligatorios' });
@@ -179,7 +179,7 @@ const CrearEmbarazoActual = (req, res) => __awaiter(void 0, void 0, void 0, func
         enfermedad_actual,
         bajo_liquido_amniotico,
         alto_liquido_amniotico,
-        anomalia_fetal,
+        "anomalía_fetal", 
         crecimiento_disminuido,
         in_vitro,
         gestacion_multiple,
@@ -191,7 +191,7 @@ const CrearEmbarazoActual = (req, res) => __awaiter(void 0, void 0, void 0, func
             enfermedad_actual,
             bajo_liquido_amniotico,
             alto_liquido_amniotico,
-            anomalia_fetal,
+            anomalía_fetal,
             crecimiento_disminuido,
             in_vitro,
             gestacion_multiple,
@@ -203,7 +203,7 @@ const CrearEmbarazoActual = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
     catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error al crear la información del embarazo actual' });
+        res.status(500).json({ message: 'Error al crear la información del embarazo actual', error });
     }
 });
 exports.CrearEmbarazoActual = CrearEmbarazoActual;
@@ -326,30 +326,29 @@ const CrearActividadFisica = (req, res) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.CrearActividadFisica = CrearActividadFisica;
 const ObtenerDatosUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { correo } = req.params;
-    console.log(correo);
-    if (!correo) {
-        return res.status(400).json({ message: 'El correo electrónico es obligatorio' });
+    const { id } = req.params;
+    if (!id) {
+        return res.status(400).json({ message: 'No se encontró ID' });
     }
     try {
         // Obtener datos del usuario
-        const { rows: usuario } = yield db_1.default.query('SELECT * FROM usuario WHERE correo = $1', [correo]);
+        const { rows: usuario } = yield db_1.default.query('SELECT * FROM usuario WHERE id = $1', [id]);
         if (usuario.length === 0) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
         const usuarioId = usuario[0].id;
         // Obtener datos médicos
-        const { rows: datosMedicos } = yield db_1.default.query('SELECT * FROM datos_medicos WHERE usuario_id = $1', [usuarioId]);
+        const { rows: datosMedicos } = yield db_1.default.query('SELECT * FROM datos_medicos WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1', [usuarioId]);
         // Obtener antecedentes obstétricos
-        const { rows: antecedentesObstetricos } = yield db_1.default.query('SELECT * FROM antecedentes_obstetricos WHERE usuario_id = $1', [usuarioId]);
+        const { rows: antecedentesObstetricos } = yield db_1.default.query('SELECT * FROM antecedentes_obstetricos WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1', [usuarioId]);
         // Obtener embarazo actual
-        const { rows: embarazoActual } = yield db_1.default.query('SELECT * FROM embarazo_actual WHERE usuario_id = $1', [usuarioId]);
+        const { rows: embarazoActual } = yield db_1.default.query('SELECT * FROM embarazo_actual WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1', [usuarioId]);
         // Obtener hábitos
-        const { rows: habitos } = yield db_1.default.query('SELECT * FROM habitos WHERE usuario_id = $1', [usuarioId]);
+        const { rows: habitos } = yield db_1.default.query('SELECT * FROM habitos WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1', [usuarioId]);
         // Obtener nutrición
-        const { rows: nutricion } = yield db_1.default.query('SELECT * FROM nutricion WHERE usuario_id = $1', [usuarioId]);
+        const { rows: nutricion } = yield db_1.default.query('SELECT * FROM nutricion WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1', [usuarioId]);
         // Obtener actividad física
-        const { rows: actividadFisica } = yield db_1.default.query('SELECT * FROM actividad_fisica WHERE usuario_id = $1', [usuarioId]);
+        const { rows: actividadFisica } = yield db_1.default.query('SELECT * FROM actividad_fisica WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1', [usuarioId]);
         // Construir objeto de respuesta
         const datosUsuario = {
             usuario: usuario[0],
@@ -363,7 +362,6 @@ const ObtenerDatosUsuario = (req, res) => __awaiter(void 0, void 0, void 0, func
         // Eliminar la contraseña del objeto de respuesta
         delete datosUsuario.usuario.contraseña;
         // Obtener recomendaciones locales
-        // const recomendaciones = await obtenerRecomendacionesIA(promptParaIA, datosUsuario);
         const recomendaciones = yield obtenerRecomendacionesLocales(datosUsuario);
         const prompt = yield crearPromptSimplificado(datosUsuario);
         const recomendacionesIA = yield obtenerRecomendacionesIA(prompt, datosUsuario);
@@ -487,7 +485,7 @@ function obtenerRecomendacionesIA(prompt, datosUsuario) {
                 model: 'EleutherAI/gpt-neo-2.7B',
                 inputs: prompt,
                 parameters: {
-                    max_new_tokens: 1000,
+                    max_new_tokens: 150,
                 },
             });
             // Verifica si la respuesta de la IA es útil

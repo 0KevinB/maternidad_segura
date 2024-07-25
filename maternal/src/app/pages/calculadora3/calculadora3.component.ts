@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserService } from '../../services/user.service';
 import { Router, RouterLink } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
 import { CommonModule } from '@angular/common';
+import { CalculadoraDataService } from '../../services/calculadora-data.service';
 
 @Component({
   selector: 'app-calculadora3',
@@ -26,9 +26,9 @@ export class Calculadora3Component {
     semanas_embarazo: ['', [Validators.required, Validators.min(1), Validators.max(42)]],
     numero_fetos: ['', [Validators.required, Validators.min(1)]],
   });
-
+  
   constructor(
-    private userService: UserService,
+    private calculadoraDataService: CalculadoraDataService,
     private fb: FormBuilder,
     private router: Router,
     private notificationService: NotificationService
@@ -39,22 +39,12 @@ export class Calculadora3Component {
     return control ? control.valid && control.touched : false;
   }
 
-  onSubmit() {
-    if (this.myForm.valid) {
-      console.log(this.myForm.value);
-      // Aquí puedes agregar la lógica para enviar los datos al servicio
-      // this.userService.updatePregnancyInfo(this.myForm.value).subscribe(
-      //   response => {
-      //     this.notificationService.showSuccess('Información del embarazo actualizada con éxito');
-      //     this.router.navigate(['/dashboard']);
-      //   },
-      //   error => {
-      //     this.notificationService.showError('Error al actualizar la información del embarazo');
-      //   }
-      // );
-    } else {
-      this.myForm.markAllAsTouched();
-      this.notificationService.notify('Por favor, completa todos los campos requeridos correctamente.');
-    }
+  ngOnInit() {
+    const existingData = this.calculadoraDataService.getData('calculadora3');
+    this.myForm.patchValue(existingData);
+
+    this.myForm.valueChanges.subscribe(formData => {
+      this.calculadoraDataService.updateData('calculadora3', formData);
+    });
   }
 }

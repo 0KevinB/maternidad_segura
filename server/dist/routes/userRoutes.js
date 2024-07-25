@@ -12,5 +12,5 @@ router.post('/datos-habitos', userController_1.CrearHabitos);
 router.post('/datos-nutricion', userController_1.CrearNutricion);
 router.post('/datos-actividad', userController_1.CrearActividadFisica);
 router.post('/recomendaciones', userController_1.ObtenerDatosUsuario);
-router.get('/obtener-datos/:correo', userController_1.ObtenerDatosUsuario);
+router.get('/obtener-datos/:id', userController_1.ObtenerDatosUsuario);
 exports.default = router;

@@ -1,52 +1,48 @@
-import { Component } from '@angular/core';
-import { HeaderComponent } from '../../components/header/header.component';
-import { FooterComponent } from '../../components/footer/footer.component';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { UserService } from '../../services/user.service';
-import { Router, RouterLink } from '@angular/router';
-import { NotificationService } from '../../services/notification.service';
 import { CommonModule } from '@angular/common';
+import { CalculadoraDataService } from '../../services/calculadora-data.service';
 
 @Component({
   selector: 'app-calculadora1',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, FooterComponent, HeaderComponent],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './calculadora1.component.html',
-  styleUrl: './calculadora1.component.css'
+  styleUrls: ['./calculadora1.component.css']
 })
-export class Calculadora1Component {
-
-  public myForm: FormGroup = this.fb.group({
-    altura: [''],
-    peso: [''],
-    hipertension: [''],
-    hipotiroidismo: [''],
-    hipertiroidismo: [''],
-    asma: [''],
-    cancer: [''],
-    ETS: [''],
-    ansiedad: [''],
-    depresion: [''],
-    diabetes: [''],
-    enfermedad_renal: [''],
-    enfermedad_cardiaca: [''],
-    medicacion: [''],
-  });
+export class Calculadora1Component implements OnInit {
+  myForm: FormGroup;
 
   constructor(
-    private _userService: UserService,
     private fb: FormBuilder,
-    private router: Router,
-    private notificationService: NotificationService
-  ) { }
-
-  isValidField(field: string) {
-    const control = this.myForm.controls[field];
-    return control ? control.valid && control.touched : false;
+    private calculadoraDataService: CalculadoraDataService
+  ) {
+    this.myForm = this.fb.group({
+      altura: [''],
+      peso: [''],
+      hipertension: [false],
+      hipotiroidismo: [false],
+      hipertiroidismo: [false],
+      asma: [false],
+      cancer: [false],
+      ETS: [false],
+      ansiedad: [false],
+      depresion: [false],
+      diabetes: [false],
+      enfermedad_renal: [false],
+      enfermedad_cardiaca: [false],
+      medicacion: [false],
+    });
   }
 
-  onSubmit() {
-    // Aquí manejas la lógica para enviar los datos, por ejemplo, a través de un servicio
-    console.log(this.myForm.value);
+  ngOnInit() {
+    const existingData = this.calculadoraDataService.getData('calculadora1');
+    this.myForm.patchValue(existingData);
+
+    this.myForm.valueChanges.subscribe(formData => {
+      this.calculadoraDataService.updateData('calculadora1', formData);
+    });
   }
+
+  // Otros métodos...
 }

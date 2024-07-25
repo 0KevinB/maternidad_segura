@@ -1,6 +1,5 @@
-<app-header></app-header>
 
-<form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="diet-form">
+<form [formGroup]="myForm" class="diet-form">
     <div class="container mt-4">
         <h2 class="text-center mb-4">Hábitos Alimenticios</h2>
         
@@ -70,13 +69,5 @@
                 </div>
             </div>
         </div>
-        
-        <div class="d-grid gap-2 col-md-6 mx-auto mt-4">
-            <button class="btn btn-primary btn-lg" type="submit" [disabled]="myForm.invalid">
-                <i class="fas fa-save"></i> Guardar Información de Dieta
-            </button>
-        </div>
     </div>
 </form>
-
-<app-footer></app-footer>

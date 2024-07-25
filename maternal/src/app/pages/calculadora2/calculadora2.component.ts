@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { UserService } from '../../services/user.service';
 import { Router, RouterLink } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
 import { CommonModule } from '@angular/common';
+import { CalculadoraDataService } from '../../services/calculadora-data.service';
 
 @Component({
   selector: 'app-calculadora2',
@@ -22,12 +22,12 @@ export class Calculadora2Component {
     hemorragias: [false],
     perdida: [false],
   });
-
+  
   constructor(
-    private userService: UserService,
     private fb: FormBuilder,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private calculadoraDataService: CalculadoraDataService
   ) { }
 
   isValidField(field: string) {
@@ -35,21 +35,12 @@ export class Calculadora2Component {
     return control ? control.valid && control.touched : false;
   }
 
-  onSubmit() {
-    if (this.myForm.valid) {
-      console.log(this.myForm.value);
-      // Aquí puedes agregar la lógica para enviar los datos al servicio
-      // this.userService.updateObstetricHistory(this.myForm.value).subscribe(
-      //   response => {
-      //     this.notificationService.showSuccess('Historial obstétrico actualizado con éxito');
-      //     this.router.navigate(['/dashboard']);
-      //   },
-      //   error => {
-      //     this.notificationService.showError('Error al actualizar el historial obstétrico');
-      //   }
-      // );
-    } else {
-      this.myForm.markAllAsTouched();
-    }
+  ngOnInit() {
+    const existingData = this.calculadoraDataService.getData('calculadora2');
+    this.myForm.patchValue(existingData);
+
+    this.myForm.valueChanges.subscribe(formData => {
+      this.calculadoraDataService.updateData('calculadora2', formData);
+    });
   }
 }

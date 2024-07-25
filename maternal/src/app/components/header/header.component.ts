@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -14,7 +13,7 @@ import { CommonModule } from '@angular/common';
 export class HeaderComponent implements OnInit {
     userLoginOn: boolean = true;
   
-    constructor(private router: Router, private _AuthService: AuthService, private userServices: UserService) { }
+    constructor(private router: Router, private _AuthService: AuthService) { }
     ngOnInit(): void {
       this.userLoginOn = this._AuthService.isLoggedIn();
     }

@@ -208,17 +208,17 @@ export const CrearAntecedentesObstetricos = async (req: Request, res: Response) 
   }
 };
 export const CrearEmbarazoActual = async (req: Request, res: Response) => {
-  const {
-    usuario_id,
-    enfermedad_actual,
-    bajo_liquido_amniotico,
-    alto_liquido_amniotico,
-    anomalia_fetal,
-    crecimiento_disminuido,
-    in_vitro,
-    gestacion_multiple,
-    semanas_embarazo,
-    numero_fetos
+  const { 
+    usuario_id, 
+    enfermedad_actual, 
+    bajo_liquido_amniotico, 
+    alto_liquido_amniotico, 
+    anomalía_fetal,  
+    crecimiento_disminuido, 
+    in_vitro, 
+    gestacion_multiple, 
+    semanas_embarazo, 
+    numero_fetos 
   } = req.body;
 
   // Validación de entrada
@@ -235,7 +235,7 @@ export const CrearEmbarazoActual = async (req: Request, res: Response) => {
         enfermedad_actual,
         bajo_liquido_amniotico,
         alto_liquido_amniotico,
-        anomalia_fetal,
+        "anomalía_fetal", 
         crecimiento_disminuido,
         in_vitro,
         gestacion_multiple,
@@ -248,7 +248,7 @@ export const CrearEmbarazoActual = async (req: Request, res: Response) => {
         enfermedad_actual,
         bajo_liquido_amniotico,
         alto_liquido_amniotico,
-        anomalia_fetal,
+        anomalía_fetal,
         crecimiento_disminuido,
         in_vitro,
         gestacion_multiple,
@@ -261,7 +261,7 @@ export const CrearEmbarazoActual = async (req: Request, res: Response) => {
     res.status(201).json({ message: 'Información del embarazo actual creada exitosamente' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error al crear la información del embarazo actual' });
+    res.status(500).json({ message: 'Error al crear la información del embarazo actual', error });
   }
 };
 export const CrearHabitos = async (req: Request, res: Response) => {
@@ -424,18 +424,17 @@ export const CrearActividadFisica = async (req: Request, res: Response) => {
   }
 };
 export const ObtenerDatosUsuario = async (req: Request, res: Response) => {
-  const { correo } = req.params;
-  console.log(correo);
+  const { id } = req.params;
 
-  if (!correo) {
-    return res.status(400).json({ message: 'El correo electrónico es obligatorio' });
+  if (!id) {
+    return res.status(400).json({ message: 'No se encontró ID' });
   }
 
   try {
     // Obtener datos del usuario
     const { rows: usuario } = await connection.query(
-      'SELECT * FROM usuario WHERE correo = $1',
-      [correo]
+      'SELECT * FROM usuario WHERE id = $1',
+      [id]
     );
 
     if (usuario.length === 0) {
@@ -446,37 +445,37 @@ export const ObtenerDatosUsuario = async (req: Request, res: Response) => {
 
     // Obtener datos médicos
     const { rows: datosMedicos } = await connection.query(
-      'SELECT * FROM datos_medicos WHERE usuario_id = $1',
+      'SELECT * FROM datos_medicos WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
       [usuarioId]
     );
 
     // Obtener antecedentes obstétricos
     const { rows: antecedentesObstetricos } = await connection.query(
-      'SELECT * FROM antecedentes_obstetricos WHERE usuario_id = $1',
+      'SELECT * FROM antecedentes_obstetricos WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
       [usuarioId]
     );
 
     // Obtener embarazo actual
     const { rows: embarazoActual } = await connection.query(
-      'SELECT * FROM embarazo_actual WHERE usuario_id = $1',
+      'SELECT * FROM embarazo_actual WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
       [usuarioId]
     );
 
     // Obtener hábitos
     const { rows: habitos } = await connection.query(
-      'SELECT * FROM habitos WHERE usuario_id = $1',
+      'SELECT * FROM habitos WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
       [usuarioId]
     );
 
     // Obtener nutrición
     const { rows: nutricion } = await connection.query(
-      'SELECT * FROM nutricion WHERE usuario_id = $1',
+      'SELECT * FROM nutricion WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
       [usuarioId]
     );
 
     // Obtener actividad física
     const { rows: actividadFisica } = await connection.query(
-      'SELECT * FROM actividad_fisica WHERE usuario_id = $1',
+      'SELECT * FROM actividad_fisica WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
       [usuarioId]
     );
 
@@ -495,11 +494,11 @@ export const ObtenerDatosUsuario = async (req: Request, res: Response) => {
     delete datosUsuario.usuario.contraseña;
 
     // Obtener recomendaciones locales
-    // const recomendaciones = await obtenerRecomendacionesIA(promptParaIA, datosUsuario);
     const recomendaciones = await obtenerRecomendacionesLocales(datosUsuario);
-    const prompt = await crearPromptSimplificado(datosUsuario)
+    const prompt = await crearPromptSimplificado(datosUsuario);
     const recomendacionesIA = await obtenerRecomendacionesIA(prompt, datosUsuario);
-    const resultados = await calcularPorcentajesSeguridad(datosUsuario)
+    const resultados = await calcularPorcentajesSeguridad(datosUsuario);
+
     // Incluir el prompt y las recomendaciones en la respuesta
     res.status(200).json({
       datosUsuario,
@@ -512,6 +511,7 @@ export const ObtenerDatosUsuario = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error al obtener los datos y recomendaciones' });
   }
 };
+
 function crearPromptParaIA(datosUsuario: any): string {
   const {
     usuario,
@@ -636,7 +636,7 @@ async function obtenerRecomendacionesIA(prompt: string, datosUsuario: any): Prom
       model: 'EleutherAI/gpt-neo-2.7B',
       inputs: prompt,
       parameters: {
-        max_new_tokens: 1000,
+        max_new_tokens: 150,
       },
     });
 

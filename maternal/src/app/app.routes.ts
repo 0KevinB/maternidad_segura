@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { InicioComponent } from './pages/inicio/inicio.component';
-import { FormularioDatosComponent } from './pages/formulario-datos/formulario-datos.component';
-import { FormularioHabitosComponent } from './pages/formulario-habitos/formulario-habitos.component';
 import { ResultadosComponent } from './pages/resultados/resultados.component';
 import { ContactoProfesionalComponent } from './pages/contacto-profesional/contacto-profesional.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -13,6 +11,7 @@ import { Calculadora3Component } from './pages/calculadora3/calculadora3.compone
 import { Calculadora4Component } from './pages/calculadora4/calculadora4.component';
 import { Calculadora5Component } from './pages/calculadora5/calculadora5.component';
 import { Calculadora6Component } from './pages/calculadora6/calculadora6.component';
+import { CalculadoraComponent } from './pages/calculadora/calculadora.component';
 
 
 export const routes: Routes = [
@@ -20,6 +19,7 @@ export const routes: Routes = [
   { path: 'inicio', component: InicioComponent },
   { path: 'contacto-profesional', component: ContactoProfesionalComponent },
   { path: 'registro', component: RegistroComponent },
+  { path: 'calculadora', component: CalculadoraComponent },
   { path: 'calculadora/1', component: Calculadora1Component },
   { path: 'calculadora/2', component: Calculadora2Component },
   { path: 'calculadora/3', component: Calculadora3Component },
