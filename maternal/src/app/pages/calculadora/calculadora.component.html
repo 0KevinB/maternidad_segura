@@ -1,0 +1,51 @@
+<app-header></app-header>
+
+<!-- calculadora-principal.component.html -->
+<div class="calculadora-container">
+  <header>
+    <h1>Calculadora Médica</h1>
+    <div class="progress-indicator">
+      Paso {{ currentStep }} de 6
+    </div>
+  </header>
+
+  <main>
+    <ng-container [ngSwitch]="currentStep">
+      <app-calculadora1 *ngSwitchCase="1"></app-calculadora1>
+      <app-calculadora2 *ngSwitchCase="2"></app-calculadora2>
+      <app-calculadora3 *ngSwitchCase="3"></app-calculadora3>
+      <app-calculadora4 *ngSwitchCase="4"></app-calculadora4>
+      <app-calculadora5 *ngSwitchCase="5"></app-calculadora5>
+      <app-calculadora6 *ngSwitchCase="6"></app-calculadora6>
+    </ng-container>
+  </main>
+
+  <footer>
+    <div class="navigation-buttons">
+      <button 
+        (click)="previousStep()" 
+        (click)="saveProgress()"
+        [disabled]="currentStep === 1"
+        class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Anterior
+      </button>
+      <button 
+        (click)="nextStep()" 
+        (click)="saveProgress()"
+        [disabled]="currentStep === 6"
+        class="btn btn-primary">
+        Siguiente <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+    <div class="additional-actions">
+      <button 
+        *ngIf="currentStep === 6"
+        (click)="submitAll()" 
+        class="btn btn-success">
+        <i class="fas fa-check"></i> Enviar todo
+      </button>
+    </div>
+  </footer>
+</div>
+
+<app-footer></app-footer>

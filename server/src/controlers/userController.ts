@@ -423,95 +423,101 @@ export const CrearActividadFisica = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error al crear la información de actividad física' });
   }
 };
+async function obtenerDatosUsuarioInterno(id: string) {
+  const { rows: usuario } = await connection.query(
+    'SELECT * FROM usuario WHERE id = $1',
+    [id]
+  );
+  if (usuario.length === 0) {
+    return null;
+  }
+  const usuarioId = usuario[0].id;
+
+  const { rows: datosMedicos } = await connection.query(
+    'SELECT * FROM datos_medicos WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
+    [usuarioId]
+  );
+
+  const { rows: antecedentesObstetricos } = await connection.query(
+    'SELECT * FROM antecedentes_obstetricos WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
+    [usuarioId]
+  );
+
+  const { rows: embarazoActual } = await connection.query(
+    'SELECT * FROM embarazo_actual WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
+    [usuarioId]
+  );
+
+  const { rows: habitos } = await connection.query(
+    'SELECT * FROM habitos WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
+    [usuarioId]
+  );
+
+  const { rows: nutricion } = await connection.query(
+    'SELECT * FROM nutricion WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
+    [usuarioId]
+  );
+
+  const { rows: actividadFisica } = await connection.query(
+    'SELECT * FROM actividad_fisica WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
+    [usuarioId]
+  );
+
+  const datosUsuario = {
+    usuario: usuario[0],
+    datosMedicos: datosMedicos[0] || null,
+    antecedentesObstetricos: antecedentesObstetricos[0] || null,
+    embarazoActual: embarazoActual[0] || null,
+    habitos: habitos[0] || null,
+    nutricion: nutricion[0] || null,
+    actividadFisica: actividadFisica[0] || null
+  };
+
+  delete datosUsuario.usuario.contraseña;
+  return datosUsuario;
+}
 export const ObtenerDatosUsuario = async (req: Request, res: Response) => {
   const { id } = req.params;
-
   if (!id) {
     return res.status(400).json({ message: 'No se encontró ID' });
   }
-
   try {
-    // Obtener datos del usuario
-    const { rows: usuario } = await connection.query(
-      'SELECT * FROM usuario WHERE id = $1',
-      [id]
-    );
-
-    if (usuario.length === 0) {
+    const datosUsuario = await obtenerDatosUsuarioInterno(id);
+    if (!datosUsuario) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    res.status(200).json({ datosUsuario });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener los datos del usuario' });
+  }
+};
+export const ObtenerRecomendaciones = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ message: 'No se encontró ID' });
+  }
+  try {
+    const datosUsuario = await obtenerDatosUsuarioInterno(id);
+    if (!datosUsuario) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
-    const usuarioId = usuario[0].id;
-
-    // Obtener datos médicos
-    const { rows: datosMedicos } = await connection.query(
-      'SELECT * FROM datos_medicos WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
-      [usuarioId]
-    );
-
-    // Obtener antecedentes obstétricos
-    const { rows: antecedentesObstetricos } = await connection.query(
-      'SELECT * FROM antecedentes_obstetricos WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
-      [usuarioId]
-    );
-
-    // Obtener embarazo actual
-    const { rows: embarazoActual } = await connection.query(
-      'SELECT * FROM embarazo_actual WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
-      [usuarioId]
-    );
-
-    // Obtener hábitos
-    const { rows: habitos } = await connection.query(
-      'SELECT * FROM habitos WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
-      [usuarioId]
-    );
-
-    // Obtener nutrición
-    const { rows: nutricion } = await connection.query(
-      'SELECT * FROM nutricion WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
-      [usuarioId]
-    );
-
-    // Obtener actividad física
-    const { rows: actividadFisica } = await connection.query(
-      'SELECT * FROM actividad_fisica WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1',
-      [usuarioId]
-    );
-
-    // Construir objeto de respuesta
-    const datosUsuario = {
-      usuario: usuario[0],
-      datosMedicos: datosMedicos[0] || null,
-      antecedentesObstetricos: antecedentesObstetricos[0] || null,
-      embarazoActual: embarazoActual[0] || null,
-      habitos: habitos[0] || null,
-      nutricion: nutricion[0] || null,
-      actividadFisica: actividadFisica[0] || null
-    };
-
-    // Eliminar la contraseña del objeto de respuesta
-    delete datosUsuario.usuario.contraseña;
-
-    // Obtener recomendaciones locales
     const recomendaciones = await obtenerRecomendacionesLocales(datosUsuario);
     const prompt = await crearPromptSimplificado(datosUsuario);
     const recomendacionesIA = await obtenerRecomendacionesIA(prompt, datosUsuario);
     const resultados = await calcularPorcentajesSeguridad(datosUsuario);
 
-    // Incluir el prompt y las recomendaciones en la respuesta
     res.status(200).json({
-      datosUsuario,
       recomendaciones,
       recomendacionesIA,
       resultados
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error al obtener los datos y recomendaciones' });
+    res.status(500).json({ message: 'Error al obtener las recomendaciones' });
   }
 };
-
 function crearPromptParaIA(datosUsuario: any): string {
   const {
     usuario,

@@ -70,4 +70,8 @@ export class UsuarioService {
   obtenerRecomendaciones(): Observable<any> {
     return this.http.post(`${this.myAppUrl}${this.myApiUrl}recomendaciones`, {});
   }
+
+  getAllUserData(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.myAppUrl}${this.myApiUrl}obtener-datos/${userId}`);
+  }
 }

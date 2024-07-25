@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ObtenerDatosUsuario = exports.CrearActividadFisica = exports.CrearNutricion = exports.CrearHabitos = exports.CrearEmbarazoActual = exports.CrearAntecedentesObstetricos = exports.CrearDatosMedicos = exports.LoginUsuario = exports.CrearUsuario = void 0;
+exports.ObtenerRecomendaciones = exports.ObtenerDatosUsuario = exports.CrearActividadFisica = exports.CrearNutricion = exports.CrearHabitos = exports.CrearEmbarazoActual = exports.CrearAntecedentesObstetricos = exports.CrearDatosMedicos = exports.LoginUsuario = exports.CrearUsuario = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const db_1 = __importDefault(require("../models/db"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -325,31 +325,19 @@ const CrearActividadFisica = (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.CrearActividadFisica = CrearActividadFisica;
-const ObtenerDatosUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    if (!id) {
-        return res.status(400).json({ message: 'No se encontró ID' });
-    }
-    try {
-        // Obtener datos del usuario
+function obtenerDatosUsuarioInterno(id) {
+    return __awaiter(this, void 0, void 0, function* () {
         const { rows: usuario } = yield db_1.default.query('SELECT * FROM usuario WHERE id = $1', [id]);
         if (usuario.length === 0) {
-            return res.status(404).json({ message: 'Usuario no encontrado' });
+            return null;
         }
         const usuarioId = usuario[0].id;
-        // Obtener datos médicos
         const { rows: datosMedicos } = yield db_1.default.query('SELECT * FROM datos_medicos WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1', [usuarioId]);
-        // Obtener antecedentes obstétricos
         const { rows: antecedentesObstetricos } = yield db_1.default.query('SELECT * FROM antecedentes_obstetricos WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1', [usuarioId]);
-        // Obtener embarazo actual
         const { rows: embarazoActual } = yield db_1.default.query('SELECT * FROM embarazo_actual WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1', [usuarioId]);
-        // Obtener hábitos
         const { rows: habitos } = yield db_1.default.query('SELECT * FROM habitos WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1', [usuarioId]);
-        // Obtener nutrición
         const { rows: nutricion } = yield db_1.default.query('SELECT * FROM nutricion WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1', [usuarioId]);
-        // Obtener actividad física
         const { rows: actividadFisica } = yield db_1.default.query('SELECT * FROM actividad_fisica WHERE usuario_id = $1 ORDER BY id DESC LIMIT 1', [usuarioId]);
-        // Construir objeto de respuesta
         const datosUsuario = {
             usuario: usuario[0],
             datosMedicos: datosMedicos[0] || null,
@@ -359,16 +347,43 @@ const ObtenerDatosUsuario = (req, res) => __awaiter(void 0, void 0, void 0, func
             nutricion: nutricion[0] || null,
             actividadFisica: actividadFisica[0] || null
         };
-        // Eliminar la contraseña del objeto de respuesta
         delete datosUsuario.usuario.contraseña;
-        // Obtener recomendaciones locales
+        return datosUsuario;
+    });
+}
+const ObtenerDatosUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    if (!id) {
+        return res.status(400).json({ message: 'No se encontró ID' });
+    }
+    try {
+        const datosUsuario = yield obtenerDatosUsuarioInterno(id);
+        if (!datosUsuario) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        res.status(200).json({ datosUsuario });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener los datos del usuario' });
+    }
+});
+exports.ObtenerDatosUsuario = ObtenerDatosUsuario;
+const ObtenerRecomendaciones = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    if (!id) {
+        return res.status(400).json({ message: 'No se encontró ID' });
+    }
+    try {
+        const datosUsuario = yield obtenerDatosUsuarioInterno(id);
+        if (!datosUsuario) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
         const recomendaciones = yield obtenerRecomendacionesLocales(datosUsuario);
         const prompt = yield crearPromptSimplificado(datosUsuario);
         const recomendacionesIA = yield obtenerRecomendacionesIA(prompt, datosUsuario);
         const resultados = yield calcularPorcentajesSeguridad(datosUsuario);
-        // Incluir el prompt y las recomendaciones en la respuesta
         res.status(200).json({
-            datosUsuario,
             recomendaciones,
             recomendacionesIA,
             resultados
@@ -376,10 +391,10 @@ const ObtenerDatosUsuario = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
     catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error al obtener los datos y recomendaciones' });
+        res.status(500).json({ message: 'Error al obtener las recomendaciones' });
     }
 });
-exports.ObtenerDatosUsuario = ObtenerDatosUsuario;
+exports.ObtenerRecomendaciones = ObtenerRecomendaciones;
 function crearPromptParaIA(datosUsuario) {
     const { usuario, datosMedicos, antecedentesObstetricos, embarazoActual, habitos, nutricion, actividadFisica } = datosUsuario;
     // Calcular la edad

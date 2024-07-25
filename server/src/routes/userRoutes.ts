@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { CrearActividadFisica, CrearAntecedentesObstetricos, CrearDatosMedicos, CrearEmbarazoActual, CrearHabitos, CrearNutricion, CrearUsuario, LoginUsuario, ObtenerDatosUsuario, } from '../controlers/userController';
+import { CrearActividadFisica, CrearAntecedentesObstetricos, CrearDatosMedicos, CrearEmbarazoActual, CrearHabitos, CrearNutricion, CrearUsuario, LoginUsuario, ObtenerDatosUsuario, ObtenerRecomendaciones, } from '../controlers/userController';
 
 const router = Router();
 
@@ -13,4 +13,5 @@ router.post('/datos-nutricion', CrearNutricion);
 router.post('/datos-actividad', CrearActividadFisica);
 router.post('/recomendaciones', ObtenerDatosUsuario);
 router.get('/obtener-datos/:id', ObtenerDatosUsuario);
+router.get('/obtener-recomendaciones/:id', ObtenerRecomendaciones);
 export default router;
