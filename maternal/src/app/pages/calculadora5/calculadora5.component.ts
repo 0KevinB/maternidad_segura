@@ -39,11 +39,12 @@ export class Calculadora5Component {
   }
 
   ngOnInit() {
-    const existingData = this.calculadoraDataService.getData('5');
+    const existingData = this.calculadoraDataService.getData('calculadora5');
     this.myForm.patchValue(existingData);
 
     this.myForm.valueChanges.subscribe(formData => {
       this.calculadoraDataService.updateData('calculadora5', formData);
     });
   }
+
 }

@@ -18,7 +18,7 @@
                             </select>
                         </div>
                         
-                        <div *ngIf="myForm.get('actividad_fisica')?.value === 'si'">
+                        <div *ngIf="myForm.get('actividad_fisica')?.value === 'true'">
                             <div class="form-group mb-3">
                                 <label for="frecuenciaActividad">Frecuencia de actividad física:</label>
                                 <select class="form-control" id="frecuenciaActividad" formControlName="frecuencia_actividad">
@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         
-                        <div *ngIf="myForm.get('actividad_fisica')?.value === 'no'" class="alert alert-info">
+                        <div *ngIf="myForm.get('actividad_fisica')?.value === 'false'" class="alert alert-info">
                             <i class="fas fa-info-circle"></i> Recuerde que la actividad física regular es importante para mantener una buena salud.
                         </div>
                     </div>

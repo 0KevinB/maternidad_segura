@@ -31,7 +31,7 @@ export class Calculadora6Component {
 
     // Configurar validadores condicionales
     this.myForm.get('actividad_fisica')?.valueChanges.subscribe(value => {
-      if (value === 'si') {
+      if (value === 'true') {
         this.myForm.get('frecuencia_actividad')?.setValidators([Validators.required]);
         this.myForm.get('tiempo_actividad')?.setValidators([Validators.required, Validators.min(1), Validators.max(300)]);
       } else {

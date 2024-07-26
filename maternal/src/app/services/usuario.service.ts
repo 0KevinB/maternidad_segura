@@ -74,4 +74,8 @@ export class UsuarioService {
   getAllUserData(userId: string): Observable<any> {
     return this.http.get<any>(`${this.myAppUrl}${this.myApiUrl}obtener-datos/${userId}`);
   }
+
+  getAlRecomendaciones(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.myAppUrl}${this.myApiUrl}obtener-recomendaciones/${userId}`);
+  }
 }

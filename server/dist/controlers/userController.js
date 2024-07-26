@@ -535,7 +535,7 @@ function obtenerRecomendacionesLocales(datosUsuario) {
         "- Tome suplementos prenatales que incluyan ácido fólico, hierro y calcio según lo recomendado por su médico.",
         "- Evite alimentos crudos o poco cocidos, y limite el consumo de cafeína.",
         "- Manténgase bien hidratada bebiendo al menos 8-10 vasos de agua al día.",
-        nutricion.dieta === 1 ? "- Consulte con un nutricionista para asegurar que su dieta vegetariana/vegana cubra todas sus necesidades nutricionales." : "",
+        nutricion.dieta === 2 || nutricion.dieta === 3 ? "- Consulte con un nutricionista para asegurar que su dieta vegetariana/vegana cubra todas sus necesidades nutricionales." : "",
         nutricion.comida_rapida >= 3 ? "- Reduzca el consumo de comida rápida y opte por opciones más saludables y caseras." : "",
         nutricion.numero_vasos < 6 ? "- Aumente su ingesta de agua. Intente beber al menos 8 vasos al día." : "",
         "3. Actividad física:",
@@ -696,7 +696,7 @@ function calcularPorcentajeHabitos(habitos) {
 function calcularPorcentajeNutricion(nutricion) {
     let puntosTotales = 100;
     let puntosRestados = 0;
-    if (nutricion.dieta === 1)
+    if (nutricion.dieta === 2 || nutricion.dieta === 3)
         puntosRestados += 5; // Dieta vegetariana/vegana
     if (nutricion.frutas < 2)
         puntosRestados += 10;

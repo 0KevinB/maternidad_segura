@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { CalculadoraDataService } from '../../services/calculadora-data.service';
 import { AuthService } from '../../services/auth.service';
 import { UsuarioService } from '../../services/usuario.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calculadora',
@@ -25,7 +26,8 @@ export class CalculadoraComponent implements OnInit{
     currentStep = 1;
     usuario_id = this._authService.getID()
       
-      constructor(private usuarioService: UsuarioService, private calculadoraDataService: CalculadoraDataService, private _authService: AuthService) {
+      constructor(private usuarioService: UsuarioService, private calculadoraDataService: CalculadoraDataService, 
+        private _authService: AuthService, private router: Router) {
     }
 
     ngOnInit() {
@@ -82,43 +84,86 @@ export class CalculadoraComponent implements OnInit{
   
     submitAll() {
       const allData = this.calculadoraDataService.getAllData();
-      
+      let errorOccurred = false;
+    
+      // Función para manejar errores
+      const handleError = (error: any, calculadora: string) => {
+        console.error(`Error al enviar datos de ${calculadora}:`, error);
+        errorOccurred = true;
+      };
+    
+      // Función para verificar si todos los datos se han enviado
+      const checkAllDataSent = () => {
+        if (!errorOccurred) {
+          console.log('Todos los datos se han enviado correctamente');
+          this.router.navigate(['/resultados']);
+        }
+      };
+    
+      // Contador para rastrear las peticiones completadas
+      let completedRequests = 0;
+      const totalRequests = 6;
+    
       // Enviar datos de la calculadora 1 (Datos Médicos)
       this.usuarioService.crearDatosMedicos({ ...allData['calculadora1'], usuario_id: this.usuario_id }).subscribe(
-        response => console.log('Datos médicos enviados:', response),
-        error => console.error('Error al enviar datos médicos:', error)
+        response => {
+          console.log('Datos médicos enviados:', response);
+          completedRequests++;
+          if (completedRequests === totalRequests) checkAllDataSent();
+        },
+        error => handleError(error, 'datos médicos')
       );
-  
+    
       // Enviar datos de la calculadora 2 (Antecedentes Obstétricos)
       this.usuarioService.crearAntecedentesObstetricos({ ...allData['calculadora2'], usuario_id: this.usuario_id }).subscribe(
-        response => console.log('Antecedentes obstétricos enviados:', response),
-        error => console.error('Error al enviar antecedentes obstétricos:', error)
+        response => {
+          console.log('Antecedentes obstétricos enviados:', response);
+          completedRequests++;
+          if (completedRequests === totalRequests) checkAllDataSent();
+        },
+        error => handleError(error, 'antecedentes obstétricos')
       );
-  
+    
       // Enviar datos de la calculadora 3 (Embarazo Actual)
       this.usuarioService.crearEmbarazoActual({ ...allData['calculadora3'], usuario_id: this.usuario_id }).subscribe(
-        response => console.log('Datos de embarazo actual enviados:', response),
-        error => console.error('Error al enviar datos de embarazo actual:', error)
+        response => {
+          console.log('Datos de embarazo actual enviados:', response);
+          completedRequests++;
+          if (completedRequests === totalRequests) checkAllDataSent();
+        },
+        error => handleError(error, 'embarazo actual')
       );
-  
+    
       // Enviar datos de la calculadora 4 (Hábitos)
       this.usuarioService.crearHabitos({ ...allData['calculadora4'], usuario_id: this.usuario_id }).subscribe(
-        response => console.log('Datos de hábitos enviados:', response),
-        error => console.error('Error al enviar datos de hábitos:', error)
+        response => {
+          console.log('Datos de hábitos enviados:', response);
+          completedRequests++;
+          if (completedRequests === totalRequests) checkAllDataSent();
+        },
+        error => handleError(error, 'hábitos')
       );
-  
+    
       // Enviar datos de la calculadora 5 (Nutrición)
       this.usuarioService.crearNutricion({ ...allData['calculadora5'], usuario_id: this.usuario_id }).subscribe(
-        response => console.log('Datos de nutrición enviados:', response),
-        error => console.error('Error al enviar datos de nutrición:', error)
+        response => {
+          console.log('Datos de nutrición enviados:', response);
+          completedRequests++;
+          if (completedRequests === totalRequests) checkAllDataSent();
+        },
+        error => handleError(error, 'nutrición')
       );
-  
+    
       // Enviar datos de la calculadora 6 (Actividad Física)
       this.usuarioService.crearActividadFisica({ ...allData['calculadora6'], usuario_id: this.usuario_id }).subscribe(
-        response => console.log('Datos de actividad física enviados:', response),
-        error => console.error('Error al enviar datos de actividad física:', error)
+        response => {
+          console.log('Datos de actividad física enviados:', response);
+          completedRequests++;
+          if (completedRequests === totalRequests) checkAllDataSent();
+        },
+        error => handleError(error, 'actividad física')
       );
-  
+    
       console.log('Enviando todos los datos:', { ...allData, usuario_id: this.usuario_id });
     }
   
