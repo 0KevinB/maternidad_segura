@@ -48,3 +48,20 @@ body {
     
 }
 
+.titulo{
+    color: #121481;
+}
+
+.titulo-enf{
+    text-align: center;
+    margin: 10px 0px 10px;
+    color: #121481;
+}
+
+.form-check{
+    margin: 10px 0px 10px;
+}
+
+.card{
+    border: none;
+}

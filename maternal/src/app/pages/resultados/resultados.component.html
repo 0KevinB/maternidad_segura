@@ -7,13 +7,20 @@
       <div class="col-md-4" *ngFor="let section of secciones; let i = index">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">{{ section }}</h5>
+            <h5 class="card-title">{{ sectionTitles[section] }}</h5>
             <canvas [id]="'chart' + i"></canvas>
             <p class="card-text mt-2">Nivel de seguridad: {{ resultados.porcentajesPorSeccion[section] }}%</p>
           </div>
         </div>
       </div>
     </div>
+    
+    <div class="card mt-4">
+      <div class="card-body text-center">
+          <p class="card-text font-weight-bold">Nivel de Seguridad Total: {{ porcentajeTotal }}%</p>
+          <p class="card-text font-weight-bold">Nivel de Riesgo: {{ nivelRiesgoTotal }}</p>
+      </div>
+  </div>
 
   <h3 class="mt-4 mb-3">Recomendaciones</h3>
   <div class="accordion" id="recommendationsAccordion">
@@ -50,4 +57,5 @@
       </div>
     </div>
   </div>
+</div>
 <app-footer></app-footer>  

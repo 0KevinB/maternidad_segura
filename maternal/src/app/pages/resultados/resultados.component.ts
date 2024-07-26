@@ -22,7 +22,8 @@ export class ResultadosComponent implements OnInit {
   openPanelIA: boolean = false;
   secciones: string[] = [];
   id: string;
-
+  porcentajeTotal: any
+  nivelRiesgoTotal: any;
   constructor(private usuarioService: UsuarioService, private authService: AuthService) {
     this.recomendaciones = [];
     this.id = this.authService.getID();
@@ -33,7 +34,11 @@ export class ResultadosComponent implements OnInit {
       data => {
         this.resultados = data.resultados;
         this.recomendacionesIA = data.recomendacionesIA;
+        this.porcentajeTotal = data.resultados.porcentajeTotal
+        this.nivelRiesgoTotal = data.resultados.nivelRiesgoTotal
         this.secciones = Object.keys(this.resultados.porcentajesPorSeccion);
+        const allSections = Object.keys(this.resultados.porcentajesPorSeccion);
+        this.secciones = allSections.filter(section => ['habitos', 'nutricion', 'actividadFisica'].includes(section));
         
         // Procesar las recomendaciones
         this.processRecomendaciones(data.recomendaciones);
@@ -46,6 +51,12 @@ export class ResultadosComponent implements OnInit {
       }
     );
   }
+
+  sectionTitles: { [key: string]: string } = {
+    'nutricion': 'Nutrición',
+    'habitos': 'Hábitos',
+    'actividadFisica': 'Actividad Física'
+  };
 
   processRecomendaciones(recomendacionesText: string) {
     const sections = recomendacionesText.split(/\d+\.\s+/).filter(Boolean);
@@ -66,10 +77,11 @@ export class ResultadosComponent implements OnInit {
         new Chart(ctx, {
           type: 'doughnut',
           data: {
-            labels: [section, 'Resto'],
+            labels: [this.sectionTitles[section], 'Resto'],
             datasets: [{
               data: [this.resultados.porcentajesPorSeccion[section], 100 - this.resultados.porcentajesPorSeccion[section]],
-              backgroundColor: ['#36A2EB', '#EAEAEA']
+              backgroundColor: this.getSectionColor(section),
+              borderWidth: 0
             }]
           },
           options: {
@@ -85,10 +97,44 @@ export class ResultadosComponent implements OnInit {
               }
             },
             cutout: '70%'
-          }
+          },
+          plugins: [this.centerTextPlugin()]
         });
       }
     });
+  }
+
+  centerTextPlugin() {
+    return {
+      id: 'centerText',
+      beforeDraw: (chart: { width: any; height: any; ctx: any; data: { datasets: { data: any[]; }[]; }; }) => {
+        const width = chart.width;
+        const height = chart.height;
+        const ctx = chart.ctx;
+        ctx.restore();
+        const fontSize = (height / 114).toFixed(2);
+        ctx.font = `${fontSize}em sans-serif`;
+        ctx.textBaseline = 'middle';
+        const text = `${chart.data.datasets[0].data[0]}%`;
+        const textX = Math.round((width - ctx.measureText(text).width) / 2);
+        const textY = height / 2;
+        ctx.fillText(text, textX, textY);
+        ctx.save();
+      }
+    };
+  }
+
+  getSectionColor(section: string): string[] {
+    switch (section) {
+      case 'nutricion':
+        return ['#FF6384', '#EAEAEA']; // Rosa
+      case 'habitos':
+        return ['#FF9F40', '#EAEAEA']; // Naranja
+      case 'actividadFisica':
+        return ['#36A2EB', '#EAEAEA']; // Azul
+      default:
+        return ['#36A2EB', '#EAEAEA']; // Default color (azul)
+    }
   }
 
   toggleCollapse(index: number) {

@@ -1,140 +1,122 @@
-
 <form [formGroup]="myForm" class="medical-form">
     <div class="container mt-4">
-        <h2 class="text-center mb-4">Datos Médicos</h2>
-        
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="card">
+        <h2 class="text-center mb-4 titulo">Datos Médicos</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-10"> <!-- Aumentado a col-md-10 para dar más espacio -->
+                <div class="card mb-4">
                     <div class="card-body">
-                        <h5 class="card-title">Medidas Corporales</h5>
-                        <div class="form-group">
-                            <label for="inputAltura">
-                                <i class="fas fa-ruler-vertical"></i> Altura (cm)
-                            </label>
-                            <input type="number" class="form-control" id="inputAltura" formControlName="altura" placeholder="Altura">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPeso">
-                                <i class="fas fa-weight"></i> Peso (kg)
-                            </label>
-                            <input type="number" class="form-control" id="inputPeso" formControlName="peso" placeholder="Peso">
+                        <h5 class="card-title mb-3 titulo-enf">Ingrese su altura y peso</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="inputAltura">
+                                    <i class="fas fa-ruler-vertical"></i> Altura (cm)
+                                </label>
+                                <input type="number" class="form-control form-control-sm" id="inputAltura" formControlName="altura" placeholder="Altura">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="inputPeso">
+                                    <i class="fas fa-weight"></i> Peso (kg)
+                                </label>
+                                <input type="number" class="form-control form-control-sm" id="inputPeso" formControlName="peso" placeholder="Peso">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Condiciones Endocrinas</h5>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="hipertensionCheck" formControlName="hipertension">
-                            <label class="form-check-label" for="hipertensionCheck">
-                                <i class="fas fa-heartbeat"></i> Hipertensión
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="hipotiroidismoCheck" formControlName="hipotiroidismo">
-                            <label class="form-check-label" for="hipotiroidismoCheck">
-                                <i class="fas fa-thermometer-quarter"></i> Hipotiroidismo
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="hipertiroidismoCheck" formControlName="hipertiroidismo">
-                            <label class="form-check-label" for="hipertiroidismoCheck">
-                                <i class="fas fa-thermometer-three-quarters"></i> Hipertiroidismo
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="diabetesCheck" formControlName="diabetes">
-                            <label class="form-check-label" for="diabetesCheck">
-                                <i class="fas fa-tint"></i> Diabetes
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Condiciones Respiratorias y Cardíacas</h5>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="asmaCheck" formControlName="asma">
-                            <label class="form-check-label" for="asmaCheck">
-                                <i class="fas fa-lungs"></i> Asma
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="enfermedad_cardiacaCheck" formControlName="enfermedad_cardiaca">
-                            <label class="form-check-label" for="enfermedad_cardiacaCheck">
-                                <i class="fas fa-heart"></i> Otra enfermedad cardíaca
-                            </label>
+                
+                <h5 class="text-center mb-3 titulo">¿Sufre de alguna de estas enfermedades?</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body p-4"> <!-- Añadido padding uniforme -->
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="asmaCheck" formControlName="asma">
+                                    <label class="form-check-label w-100" for="asmaCheck">
+                                        <i class="fas fa-lungs"></i> Asma
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="enfermedad_cardiacaCheck"
+                                        formControlName="enfermedad_cardiaca">
+                                    <label class="form-check-label" for="enfermedad_cardiacaCheck">
+                                        <i class="fas fa-heart"></i> Otra enfermedad cardíaca
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="ansiedadCheck"
+                                        formControlName="ansiedad">
+                                    <label class="form-check-label" for="ansiedadCheck">
+                                        <i class="fas fa-brain"></i> Ansiedad
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="depresionCheck"
+                                        formControlName="depresion">
+                                    <label class="form-check-label" for="depresionCheck">
+                                        <i class="fas fa-frown"></i> Depresión
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="etsCheck" formControlName="ETS">
+                                    <label class="form-check-label" for="etsCheck">
+                                        <i class="fas fa-virus"></i> ETS
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="medicacionCheck"
+                                        formControlName="medicacion">
+                                    <label class="form-check-label" for="medicacionCheck">
+                                        <i class="fas fa-pills"></i> ¿Toma alguna medicación?
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Condiciones Renales y Otras</h5>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="enfermedad_renalCheck" formControlName="enfermedad_renal">
-                            <label class="form-check-label" for="enfermedad_renalCheck">
-                                <i class="fas fa-kidney"></i> Otra enfermedad renal
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="cancerCheck" formControlName="cancer">
-                            <label class="form-check-label" for="cancerCheck">
-                                <i class="fas fa-ribbon"></i> Cáncer
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="etsCheck" formControlName="ETS">
-                            <label class="form-check-label" for="etsCheck">
-                                <i class="fas fa-virus"></i> ETS
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Salud Mental</h5>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="ansiedadCheck" formControlName="ansiedad">
-                            <label class="form-check-label" for="ansiedadCheck">
-                                <i class="fas fa-brain"></i> Ansiedad
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="depresionCheck" formControlName="depresion">
-                            <label class="form-check-label" for="depresionCheck">
-                                <i class="fas fa-frown"></i> Depresión
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Historial Obstétrico</h5>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="medicacionCheck" formControlName="medicacion">
-                            <label class="form-check-label" for="medicacionCheck">
-                                <i class="fas fa-baby"></i> ¿Toma alguna medicación?
-                            </label>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body p-4"> <!-- Añadido padding uniforme -->
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="hipertensionCheck" formControlName="hipertension">
+                                    <label class="form-check-label w-100" for="hipertensionCheck">
+                                        <i class="fas fa-heartbeat"></i> Hipertensión
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="hipotiroidismoCheck"
+                                        formControlName="hipotiroidismo">
+                                    <label class="form-check-label" for="hipotiroidismoCheck">
+                                        <i class="fas fa-thermometer-quarter"></i> Hipotiroidismo
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="hipertiroidismoCheck"
+                                        formControlName="hipertiroidismo">
+                                    <label class="form-check-label" for="hipertiroidismoCheck">
+                                        <i class="fas fa-thermometer-three-quarters"></i> Hipertiroidismo
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="diabetesCheck"
+                                        formControlName="diabetes">
+                                    <label class="form-check-label" for="diabetesCheck">
+                                        <i class="fas fa-tint"></i> Diabetes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="enfermedad_renalCheck"
+                                        formControlName="enfermedad_renal">
+                                    <label class="form-check-label" for="enfermedad_renalCheck">
+                                        <i class="fas fa-kidney"></i> Otra enfermedad renal
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="cancerCheck"
+                                        formControlName="cancer">
+                                    <label class="form-check-label" for="cancerCheck">
+                                        <i class="fas fa-ribbon"></i> Cáncer
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

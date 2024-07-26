@@ -1,97 +1,91 @@
-
 <form [formGroup]="myForm" class="medical-form">
     <div class="container mt-4">
-        <h2 class="text-center mb-4">Información del Embarazo Actual</h2>
-        
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Condiciones Actuales</h5>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="enfermedadActualCheck" formControlName="enfermedad_actual">
-                            <label class="form-check-label" for="enfermedadActualCheck">
-                                <i class="fas fa-stethoscope"></i> Enfermedad actual
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="bajoLiquidoCheck" formControlName="bajo_liquido_amniotico">
-                            <label class="form-check-label" for="bajoLiquidoCheck">
-                                <i class="fas fa-tint-slash"></i> Bajo líquido amniótico
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="altoLiquidoCheck" formControlName="alto_liquido_amniotico">
-                            <label class="form-check-label" for="altoLiquidoCheck">
-                                <i class="fas fa-tint"></i> Alto líquido amniótico
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Características Fetales</h5>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="anomaliaFetalCheck" formControlName="anomalia_fetal">
-                            <label class="form-check-label" for="anomaliaFetalCheck">
-                                <i class="fas fa-exclamation-triangle"></i> Anomalía fetal
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="crecimientoDisminuidoCheck" formControlName="crecimiento_disminuido">
-                            <label class="form-check-label" for="crecimientoDisminuidoCheck">
-                                <i class="fas fa-chart-line"></i> Crecimiento disminuido
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Tipo de Embarazo</h5>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="inVitroCheck" formControlName="in_vitro">
-                            <label class="form-check-label" for="inVitroCheck">
-                                <i class="fas fa-flask"></i> Fecundación in vitro
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gestacionMultipleCheck" formControlName="gestacion_multiple">
-                            <label class="form-check-label" for="gestacionMultipleCheck">
-                                <i class="fas fa-users"></i> Gestación múltiple
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Detalles del Embarazo</h5>
-                        <div class="form-group">
-                            <label for="inputSemanas">
-                                <i class="fas fa-calendar-week"></i> Semanas de embarazo
-                            </label>
-                            <input type="number" class="form-control" id="inputSemanas" formControlName="semanas_embarazo" placeholder="Semanas">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputFetos">
-                                <i class="fas fa-baby"></i> Número de fetos
-                            </label>
-                            <input type="number" class="form-control" id="inputFetos" formControlName="numero_fetos" placeholder="Número de fetos">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
+        <h2 class="text-center mb-4" style="color: #121481;">Embarazo Actual</h2>
+        <div class="row justify-content-center">
 
+            <div class="col-md-7"> <!-- Aumentado a col-md-10 para dar más espacio -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="inputSemanas">
+                                    <i class="fas fa-calendar-week"></i> Semanas de embarazo
+                                </label>
+                                <input type="number" class="form-control" id="inputSemanas"
+                                    formControlName="semanas_embarazo" placeholder="Semanas">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="inputFetos">
+                                    <i class="fas fa-baby"></i> Gestación multiple
+                                </label>
+                                <input type="number" class="form-control" id="inputFetos" formControlName="numero_fetos"
+                                    placeholder="Número de fetos">
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="" style="color: #121481;">Datos del embarazo actual</h5>
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    id="enfermedadActualCheck" formControlName="enfermedad_actual">
+                                                <label class="form-check-label" for="enfermedadActualCheck">
+                                                    <i class="fas fa-stethoscope"></i> Infección actual
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="bajoLiquidoCheck"
+                                                    formControlName="bajo_liquido_amniotico">
+                                                <label class="form-check-label" for="bajoLiquidoCheck">
+                                                    <i class="fas fa-tint-slash"></i> Bajo líquido amniótico
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="altoLiquidoCheck"
+                                                    formControlName="alto_liquido_amniotico">
+                                                <label class="form-check-label" for="altoLiquidoCheck">
+                                                    <i class="fas fa-tint"></i> Alto líquido amniótico
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="anomaliaFetalCheck"
+                                                    formControlName="anomalia_fetal">
+                                                <label class="form-check-label" for="anomaliaFetalCheck">
+                                                    <i class="fas fa-exclamation-triangle"></i> Anomalía fetal
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    id="crecimientoDisminuidoCheck"
+                                                    formControlName="crecimiento_disminuido">
+                                                <label class="form-check-label" for="crecimientoDisminuidoCheck">
+                                                    <i class="fas fa-chart-line"></i> Crecimiento disminuido
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="inVitroCheck"
+                                                    formControlName="in_vitro">
+                                                <label class="form-check-label" for="inVitroCheck">
+                                                    <i class="fas fa-flask"></i> Fecundación in vitro
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    id="gestacionMultipleCheck" formControlName="gestacion_multiple">
+                                                <label class="form-check-label" for="gestacionMultipleCheck">
+                                                    <i class="fas fa-users"></i> Gestación múltiple
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</form>

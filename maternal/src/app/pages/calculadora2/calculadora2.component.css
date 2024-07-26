@@ -3,17 +3,17 @@ body {
 }
 
 .medical-form {
-    padding: 20px;
+    padding: 10px;
 }
 
 .card {
     margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border: none;
 }
 
 .card-title {
     color: #4a148c;
-    font-weight: bold;
+    font-weight: medium;
 }
 
 .form-group {
@@ -22,7 +22,8 @@ body {
 
 label {
     color: #121481;
-    font-weight: 500;
+    font-weight: 300;
+    margin-bottom: 10px;
 }
 
 .form-check-label {
@@ -47,4 +48,18 @@ label {
     .col-md-6 {
         margin-bottom: 20px;
     }
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.row{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -50px;
 }

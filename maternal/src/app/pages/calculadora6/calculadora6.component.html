@@ -1,7 +1,7 @@
 
 <form [formGroup]="myForm" class="activity-form">
     <div class="container mt-4">
-        <h2 class="text-center mb-4">Actividad Física</h2>
+        <h2 class="text-center mb-4" style="color: #121481;">Actividad Física</h2>
         
         <div class="row">
             <div class="col-md-8 mx-auto">
@@ -18,7 +18,7 @@
                             </select>
                         </div>
                         
-                        <div *ngIf="myForm.get('actividad_fisica')?.value === 'true'">
+                        <div *ngIf="myForm.get('actividad_fisica')?.value === true || myForm.get('actividad_fisica')?.value === 'true'">
                             <div class="form-group mb-3">
                                 <label for="frecuenciaActividad">Frecuencia de actividad física:</label>
                                 <select class="form-control" id="frecuenciaActividad" formControlName="frecuencia_actividad">

@@ -8,12 +8,11 @@ body {
 
 .card {
     margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .card-title {
-    color: #4a148c;
-    font-weight: bold;
+    color: #121481;
+    font-weight: medium;
 }
 
 .form-group {
@@ -26,8 +25,8 @@ label {
 }
 
 .btn-primary {
-    background-color: #4a148c;
-    border-color: #4a148c;
+    background-color: #121481;
+    border-color: #121481;
 }
 
 .btn-primary:hover {
